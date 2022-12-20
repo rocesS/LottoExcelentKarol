@@ -1,13 +1,23 @@
 package pl.lotto.numberreceiver;
 
-import pl.lotto.numberreceiver.dto.LotteryTicketDto;
-
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.UUID;
 
-public class TicketGenerator {
-    LotteryTicketDto generateTicket(UUID id, List<Integer> numbers, LocalDateTime drawDate) {
-        return new LotteryTicketDto(id, numbers, drawDate);
+class TicketGenerator {
+
+    IdGenerator idGenerator;
+    DrawDateGenerator drawDateGenerator;
+
+    TicketGenerator(IdGenerator idGenerator, DrawDateGenerator drawDateGenerator) {
+        this.idGenerator = idGenerator;
+        this.drawDateGenerator = drawDateGenerator;
+
+    }
+    LotteryTicket generateTicket(Collection<Integer> numbers) {
+        UUID id = idGenerator.generateId();
+        LocalDateTime drawDate = drawDateGenerator.generateDrawDate();
+        return new LotteryTicket(id, new ArrayList<>(numbers), drawDate);
     }
 }

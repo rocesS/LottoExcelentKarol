@@ -1,30 +1,34 @@
 package pl.lotto.numberreceiver;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Collection;
 
-public class NumberValidator {
+class NumberValidator {
 
-    public static final int MIN = 1;
-    public static final int MAX = 99;
-    public static final int AMOUNT_OF_NUMBERS = 6;
+    private final int MIN = 1;
+    private final int MAX = 99;
+    private final int AMOUNT_OF_NUMBERS = 6;
 
-    List<Integer> numbers;
-
-    boolean validate(List<Integer> numbers) {
-        this.numbers = numbers;
-        return listContainsSixNumbers() && numbersInValidRange() && listContainsDistinctNumbers();
+    boolean validate(Collection<Integer> numbers) {
+        return CollectionContainsSixNumbers(numbers)
+                && numbersInValidRange(numbers)
+                && CollectionContainsDistinctNumbers(numbers);
     }
 
-    private boolean listContainsSixNumbers() {
+    private boolean CollectionContainsSixNumbers(Collection<Integer> numbers) {
         return numbers.size() == AMOUNT_OF_NUMBERS;
     }
 
-    private boolean listContainsDistinctNumbers() {
-        return numbers.stream().distinct().count() == AMOUNT_OF_NUMBERS;
+    private boolean CollectionContainsDistinctNumbers(Collection<Integer> numbers) {
+        int actualAmountOfNumbers = (int) numbers.stream()
+                .distinct()
+                .count();
+        return actualAmountOfNumbers == AMOUNT_OF_NUMBERS;
     }
 
-    private boolean numbersInValidRange() {
-        return numbers.stream().allMatch(a -> a >= MIN && a <= MAX);
+    private boolean numbersInValidRange(Collection<Integer> numbers) {
+        return numbers.stream()
+                .allMatch(a -> a >= MIN && a <= MAX);
     }
 
 

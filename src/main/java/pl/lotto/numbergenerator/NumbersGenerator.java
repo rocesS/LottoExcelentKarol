@@ -2,11 +2,11 @@ package pl.lotto.numbergenerator;
 
 import java.util.*;
 
-public class NumbersGenerator {
+class NumbersGenerator {
     List<Integer> generateNumbers() {
-        final int amountOfNumbers = 6;
         Set<Integer> generatedNumbers = new HashSet<>();
         Random rand = new Random();
+        int amountOfNumbers = 6;
         while(generatedNumbers.size() < amountOfNumbers) {
             generatedNumbers.add(rand.nextInt(99) + 1);
         }

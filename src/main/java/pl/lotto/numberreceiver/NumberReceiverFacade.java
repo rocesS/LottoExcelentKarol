@@ -1,38 +1,45 @@
 package pl.lotto.numberreceiver;
 
-import pl.lotto.numberreceiver.dto.InputNumbersDto;
+import pl.lotto.numberreceiver.dto.AllUserNumbersByDateDto;
 import pl.lotto.numberreceiver.dto.LotteryTicketDto;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 
 public class NumberReceiverFacade {
+    DTOMapper dtoMapper;
     NumberValidator numberValidator;
-    DrawDateGenerator drawDateGenerator;
-    IdGenerator idGenerator;
     TicketGenerator ticketGenerator;
     TicketRepository ticketRepository;
 
-    NumberReceiverFacade(NumberValidator numberValidator, DrawDateGenerator drawDateGenerator, IdGenerator idGenerator, TicketGenerator ticketGenerator, TicketRepository ticketRepository) {
+
+    NumberReceiverFacade(NumberValidator numberValidator, TicketGenerator ticketGenerator, TicketRepository ticketRepository, DTOMapper dtoMapper) {
         this.numberValidator = numberValidator;
-        this.drawDateGenerator = drawDateGenerator;
-        this.idGenerator = idGenerator;
         this.ticketGenerator = ticketGenerator;
         this.ticketRepository = ticketRepository;
+        this.dtoMapper = dtoMapper;
     }
-    public InputNumbersDto inputNumbers(List<Integer> numbersFromUser) {
+
+    public Optional<LotteryTicketDto> inputNumbers(Collection<Integer> numbersFromUser) {
         if (numberValidator.validate(numbersFromUser)) {
-            LocalDateTime drawDate = drawDateGenerator.generateDrawDate();
-            UUID id = idGenerator.generateId();
-            String message = "valid";
-            LotteryTicketDto lotteryTicket = ticketGenerator.generateTicket(id, numbersFromUser, drawDate);
-            return new InputNumbersDto(lotteryTicket, message);
+            String message = "validNumbers";
+            LotteryTicket lotteryTicket = ticketGenerator.generateTicket(numbersFromUser);
+            ticketRepository.addUserNumbers(lotteryTicket.id(), lotteryTicket);
+            return Optional.of(dtoMapper.mapLotteryTicketToDto(lotteryTicket));
         }
-        return new InputNumbersDto(null, "invalid");
+        //return Optional.ofNullable(dtoMapper.inputNumbersMapper(new InputNumbers(null, "invalid")));
+        return Optional.ofNullable(null);
     }
 
     public LotteryTicketDto retrieveUserNumbers(UUID id) {
-        return ticketRepository.getTicketById(id);
+        LotteryTicket lotteryTicket = ticketRepository.getTicketById(id);
+        return dtoMapper.mapLotteryTicketToDto(lotteryTicket);
     }
+
+    public AllUserNumbersByDateDto retrieveUserNumbers(LocalDateTime drawDate) {
+        return dtoMapper.mapAllUserNumbersByDateToDto(ticketRepository.retrieveAllUsersByDate(drawDate));
+    }
+
 }
