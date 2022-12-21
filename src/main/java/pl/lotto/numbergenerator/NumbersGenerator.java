@@ -6,9 +6,10 @@ class NumbersGenerator {
     List<Integer> generateNumbers() {
         Set<Integer> generatedNumbers = new HashSet<>();
         Random rand = new Random();
-        int amountOfNumbers = 6;
-        while(generatedNumbers.size() < amountOfNumbers) {
-            generatedNumbers.add(rand.nextInt(99) + 1);
+        final int numOfNumbers = 6;
+        final int bound = 99;
+        while(generatedNumbers.size() < numOfNumbers) {
+            generatedNumbers.add(rand.nextInt(bound) + 1);
         }
         return new ArrayList<>(generatedNumbers);
     }

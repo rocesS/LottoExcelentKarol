@@ -1,11 +1,9 @@
 package pl.lotto.numbergenerator;
 
 import pl.lotto.numbergenerator.dto.WinningNumbersDto;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
 
 public class NumbersGeneratorFacade {
     WinningNumbersRepository winningNumbersRepository;

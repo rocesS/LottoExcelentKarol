@@ -21,7 +21,7 @@ class DrawDateGenerator {
         this.date = date;
     }
     LocalDateTime generateDrawDate() {
-        LocalDateTime currentTime = LocalDateTime.now();
-        return currentTime.with(TemporalAdjusters.next(DayOfWeek.SATURDAY)).withHour(12).withMinute(0).withSecond(0).withNano(0);
+        //LocalDateTime currentTime = LocalDateTime.now();
+        return date.with(TemporalAdjusters.next(DayOfWeek.SATURDAY)).withHour(12).withMinute(0).withSecond(0).withNano(0);
     }
 }

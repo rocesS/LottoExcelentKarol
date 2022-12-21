@@ -24,12 +24,10 @@ public class NumberReceiverFacade {
 
     public Optional<LotteryTicketDto> inputNumbers(Collection<Integer> numbersFromUser) {
         if (numberValidator.validate(numbersFromUser)) {
-            String message = "validNumbers";
             LotteryTicket lotteryTicket = ticketGenerator.generateTicket(numbersFromUser);
             ticketRepository.addUserNumbers(lotteryTicket.id(), lotteryTicket);
             return Optional.of(dtoMapper.mapLotteryTicketToDto(lotteryTicket));
         }
-        //return Optional.ofNullable(dtoMapper.inputNumbersMapper(new InputNumbers(null, "invalid")));
         return Optional.ofNullable(null);
     }
 

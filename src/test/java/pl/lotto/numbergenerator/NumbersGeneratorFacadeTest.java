@@ -18,10 +18,11 @@ class NumbersGeneratorFacadeTest {
 
     @BeforeEach
     void init() {
-        winningNumbersRepositoryTest = new WinningNumbersRepositoryTest();
         // sample date to get next saturday of it
-        LocalDateTime queryDate = LocalDateTime.of(2017, 2, 13, 15, 56);
-        drawDate = queryDate.with(TemporalAdjusters.next(DayOfWeek.SATURDAY)).withHour(12).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime dateToGenerateDrawDate = LocalDateTime.of(2017, 2, 13, 15, 56);
+        drawDate = dateToGenerateDrawDate.with(TemporalAdjusters.next(DayOfWeek.SATURDAY)).withHour(12).withMinute(0).withSecond(0).withNano(0);
+
+        winningNumbersRepositoryTest = new WinningNumbersRepositoryTest();
         winningNumbersRepositoryTest.addWinningNumbers(drawDate, List.of(1, 2, 3, 4, 5, 6));
     }
 

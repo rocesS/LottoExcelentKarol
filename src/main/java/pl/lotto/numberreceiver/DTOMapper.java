@@ -3,11 +3,6 @@ package pl.lotto.numberreceiver;
 import pl.lotto.numberreceiver.dto.AllUserNumbersByDateDto;
 import pl.lotto.numberreceiver.dto.LotteryTicketDto;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
-
 class DTOMapper {
 
     LotteryTicketDto mapLotteryTicketToDto(LotteryTicket lotteryTicket) {
