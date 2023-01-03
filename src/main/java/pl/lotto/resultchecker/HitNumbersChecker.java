@@ -50,25 +50,6 @@ class HitNumbersChecker {
     private int checkHowManyNumbersWasHit(List<Integer> userNumbers, List<Integer> winningNumbers) {
         return (int) userNumbers.stream().filter(winningNumbers::contains).count();
     }
-
-
-
-    /*
-    LotteryResult checkIfUserWon(LotteryTicketDto lotteryTicketDto) {
-        Optional<WinningNumbersDto> winningNumbersDto = numbersGeneratorFacade.retrieveWonNumbers(lotteryTicketDto.drawDate());
-        if (winningNumbersDto.isPresent()) {
-            int hitNumbers = checkHowManyNumbersWasHit(lotteryTicketDto.numbers(), winningNumbersDto.get().winningNumbers());
-            final int minWonNumbers = 3;
-            if (hitNumbers >= minWonNumbers) {
-                return new LotteryResult("you won!", lotteryTicketDto.numbers(), winningNumbersDto.get().winningNumbers(), hitNumbers);
-            } else {
-                return new LotteryResult("you lost!", lotteryTicketDto.numbers(), winningNumbersDto.get().winningNumbers(), hitNumbers);
-            }
-
-        }
-        return null;
-    }
-     */
 }
 
 

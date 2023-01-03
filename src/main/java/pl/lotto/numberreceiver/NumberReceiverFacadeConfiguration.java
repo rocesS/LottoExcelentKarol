@@ -16,7 +16,6 @@ class NumberReceiverFacadeConfiguration {
 
     @Bean
     LocalDateTime date() {
-        LocalDateTime randomDate = LocalDateTime.of(2017, 2, 13, 15, 56);
-        return randomDate;
+        return LocalDateTime.of(2017, 2, 13, 15, 56);
     }
 }
