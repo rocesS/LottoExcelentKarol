@@ -1,8 +1,11 @@
 package pl.lotto.numbergenerator;
 
+import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 
-class DrawDateChecker{
+@Service
+class DrawDateChecker {
     LocalDateTime date;
 
     DrawDateChecker(LocalDateTime date) {

@@ -1,5 +1,6 @@
 package pl.lotto.numberreceiver;
 
+import pl.lotto.numberreceiver.dto.LotteryTicketDto;
 import java.util.List;
 
-record AllUserNumbersByDate (List<List<Integer>> allUserNumbers) {}
+record AllUserNumbersByDate (List<LotteryTicketDto> allUserNumbers) {}

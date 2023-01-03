@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
-
-class WinningNumbersRepositoryTest implements WinningNumbersRepository {
+public class WinningNumbersRepositoryTest implements WinningNumbersRepository {
     Map<LocalDateTime, List<Integer>> winningNumbers = new HashMap<>();
 
     @Override
@@ -16,6 +16,6 @@ class WinningNumbersRepositoryTest implements WinningNumbersRepository {
 
     @Override
     public WinningNumbers getWinningNumbers(LocalDateTime drawDate) {
-        return new WinningNumbers(winningNumbers.get(drawDate));
+        return new WinningNumbers(Optional.of(winningNumbers.get(drawDate)));
     }
 }

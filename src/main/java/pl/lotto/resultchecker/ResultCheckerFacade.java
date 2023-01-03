@@ -1,27 +1,24 @@
 package pl.lotto.resultchecker;
 
+import org.springframework.stereotype.Service;
 import pl.lotto.numbergenerator.NumbersGeneratorFacade;
-import pl.lotto.numbergenerator.dto.WinningNumbersDto;
 import pl.lotto.numberreceiver.NumberReceiverFacade;
-import pl.lotto.numberreceiver.dto.LotteryTicketDto;
 import pl.lotto.resultchecker.dto.LotteryResultDto;
+import java.util.UUID;
 
-import java.util.Optional;
-
+@Service
 public class ResultCheckerFacade {
     NumberReceiverFacade numberReceiverFacade;
     NumbersGeneratorFacade numbersGeneratorFacade;
     HitNumbersChecker hitNumbersChecker;
-    DTOMapper dtoMapper;
 
-    public ResultCheckerFacade(NumberReceiverFacade numberReceiverFacade, NumbersGeneratorFacade numbersGeneratorFacade, HitNumbersChecker hitNumbersChecker, DTOMapper dtoMapper) {
+    public ResultCheckerFacade(NumberReceiverFacade numberReceiverFacade, NumbersGeneratorFacade numbersGeneratorFacade, HitNumbersChecker hitNumbersChecker) {
         this.numberReceiverFacade = numberReceiverFacade;
         this.numbersGeneratorFacade = numbersGeneratorFacade;
         this.hitNumbersChecker = hitNumbersChecker;
-        this.dtoMapper = dtoMapper;
     }
 
-    public Optional<LotteryResultDto> checkWinner(LotteryTicketDto lotteryTicketDto) {
-        return Optional.ofNullable(dtoMapper.mapLotteryResultToDto(hitNumbersChecker.checkIfUserWon(lotteryTicketDto)));
+    public LotteryResultDto checkWinner(UUID id) {
+        return DtoMapper.mapLotteryResultToDto(hitNumbersChecker.checkIfUserWon(id));
     }
 }

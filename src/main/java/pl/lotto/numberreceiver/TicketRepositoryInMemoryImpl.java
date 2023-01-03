@@ -1,11 +1,15 @@
 package pl.lotto.numberreceiver;
 
+import org.springframework.stereotype.Repository;
 import pl.lotto.numberreceiver.dto.LotteryTicketDto;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
-
+@Repository
 class TicketRepositoryInMemoryImpl implements TicketRepository {
 
     private final Map<UUID, LotteryTicket> userNumbers = new HashMap<>();
@@ -21,7 +25,6 @@ class TicketRepositoryInMemoryImpl implements TicketRepository {
     }
 
 
-
     @Override
     public AllUserNumbersByDate retrieveAllUsersByDate(LocalDateTime date) {
         List<LotteryTicketDto> numbers = userNumbers.values()
@@ -31,6 +34,4 @@ class TicketRepositoryInMemoryImpl implements TicketRepository {
                 .collect(Collectors.toList());
         return new AllUserNumbersByDate(numbers);
     }
-
-
 }

@@ -1,5 +1,8 @@
 package pl.lotto.numberreceiver;
 
+import org.springframework.stereotype.Repository;
+import pl.lotto.numberreceiver.dto.AllUserNumbersByDateDto;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 

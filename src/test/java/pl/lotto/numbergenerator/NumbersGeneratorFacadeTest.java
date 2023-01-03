@@ -7,7 +7,6 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,11 +18,12 @@ class NumbersGeneratorFacadeTest {
     @BeforeEach
     void init() {
         // sample date to get next saturday of it
-        LocalDateTime dateToGenerateDrawDate = LocalDateTime.of(2017, 2, 13, 15, 56);
-        drawDate = dateToGenerateDrawDate.with(TemporalAdjusters.next(DayOfWeek.SATURDAY)).withHour(12).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime randomDate = LocalDateTime.of(2017, 2, 13, 15, 56);
+        drawDate = randomDate.with(TemporalAdjusters.next(DayOfWeek.SATURDAY)).withHour(12).withMinute(0).withSecond(0).withNano(0);
 
         winningNumbersRepositoryTest = new WinningNumbersRepositoryTest();
-        winningNumbersRepositoryTest.addWinningNumbers(drawDate, List.of(1, 2, 3, 4, 5, 6));
+        List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6);
+        winningNumbersRepositoryTest.addWinningNumbers(drawDate, numbers);
     }
 
     @Test
@@ -34,8 +34,8 @@ class NumbersGeneratorFacadeTest {
                 .createFacadeForTest(winningNumbersRepositoryTest, queryDate);
 
         //when
-        Optional<WinningNumbersDto> result = numbersGeneratorFacade.retrieveWonNumbers(drawDate);
-        List<Integer> numbers = result.get().winningNumbers();
+        WinningNumbersDto result = numbersGeneratorFacade.retrieveWonNumbers(drawDate);
+        List<Integer> numbers = result.winningNumbers().get();
         int correctDigits = (int) numbers.stream()
                 .filter(a -> a > 0 && a < 100)
                 .distinct().count();
@@ -52,9 +52,9 @@ class NumbersGeneratorFacadeTest {
                 .createFacadeForTest(winningNumbersRepositoryTest, queryDate);
 
         //when
-        Optional<WinningNumbersDto> result = numbersGeneratorFacade.retrieveWonNumbers(drawDate);
+        WinningNumbersDto result = numbersGeneratorFacade.retrieveWonNumbers(drawDate);
 
         //then
-        assertThat(result.isEmpty()).isEqualTo(true);
+        assertThat(result.winningNumbers().isEmpty()).isEqualTo(true);
     }
 }

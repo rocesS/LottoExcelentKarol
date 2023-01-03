@@ -1,12 +1,15 @@
 package pl.lotto.numberreceiver;
 
+import org.springframework.stereotype.Service;
+
 import java.util.Collection;
 
+@Service
 class NumberValidator {
 
-    private final int MIN = 1;
-    private final int MAX = 99;
-    private final int NUM_OF_NUMBERS = 6;
+    private static final int MIN = 1;
+    private static final int MAX = 99;
+    private static final int NUM_OF_NUMBERS = 6;
 
     boolean validate(Collection<Integer> numbers) {
         return CollectionContainsSixNumbers(numbers)
@@ -29,6 +32,4 @@ class NumberValidator {
         return numbers.stream()
                 .allMatch(a -> a >= MIN && a <= MAX);
     }
-
-
 }

@@ -1,12 +1,12 @@
 package pl.lotto.resultannouncer;
 
-import pl.lotto.numberreceiver.dto.LotteryTicketDto;
+import org.springframework.stereotype.Service;
 import pl.lotto.resultannouncer.dto.LotteryAnnouncementDto;
 import pl.lotto.resultchecker.ResultCheckerFacade;
 import pl.lotto.resultchecker.dto.LotteryResultDto;
+import java.util.UUID;
 
-import java.util.Optional;
-
+@Service
 public class ResultAnnouncerFacade {
 
     ResultCheckerFacade resultCheckerFacade;
@@ -15,10 +15,9 @@ public class ResultAnnouncerFacade {
         this.resultCheckerFacade = resultCheckerFacade;
     }
 
-    public Optional<LotteryAnnouncementDto> checkWinner(LotteryTicketDto lotteryTicketDto) {
-        Optional<LotteryResultDto> lotteryResultDto = resultCheckerFacade.checkWinner(lotteryTicketDto);
-        return lotteryResultDto.map(resultDto -> Optional.of(new LotteryAnnouncementDto(
-                resultDto.message(), resultDto.yourNumbers(),
-                resultDto.winningNumbers(), resultDto.hitNumbers()))).orElse(null);
+    public LotteryAnnouncementDto checkWinner(UUID id) {
+        LotteryResultDto lotteryResultDto = resultCheckerFacade.checkWinner(id);
+        return new LotteryAnnouncementDto(lotteryResultDto.yourNumbers(), lotteryResultDto.winningNumbers(),
+                  lotteryResultDto.hitNumbers(), lotteryResultDto.message());
     }
 }
