@@ -19,6 +19,7 @@ class TicketGenerator {
         this.drawDateGenerator = drawDateGenerator;
 
     }
+
     LotteryTicket generateTicket(Collection<Integer> numbers) {
         UUID id = idGenerator.generateId();
         LocalDateTime drawDate = drawDateGenerator.generateDrawDate();

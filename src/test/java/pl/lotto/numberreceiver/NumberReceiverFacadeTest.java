@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 import java.util.stream.Stream;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,9 +13,9 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import pl.lotto.numberreceiver.dto.AllUserNumbersByDateDto;
 import pl.lotto.numberreceiver.dto.LotteryTicketDto;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-
 
 
 public class NumberReceiverFacadeTest {
@@ -22,6 +23,7 @@ public class NumberReceiverFacadeTest {
     TicketRepository ticketRepository;
     LocalDateTime dateToGenerateDrawDate;
     LocalDateTime drawDate;
+
     @BeforeEach
     void init() {
         ticketRepository = new TicketRepositoryInMemoryImpl();
@@ -31,7 +33,7 @@ public class NumberReceiverFacadeTest {
 
     @ParameterizedTest
     @MethodSource("createListsWithNumbersOutOfRange")
-    public void should_return_invalid_ticket_when_user_gave_six_numbers_out_of_range(List<Integer> numbersFromUser){
+    public void should_return_invalid_ticket_when_user_gave_six_numbers_out_of_range(List<Integer> numbersFromUser) {
         //given
         NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, dateToGenerateDrawDate);
 
@@ -53,7 +55,7 @@ public class NumberReceiverFacadeTest {
     }
 
     @Test
-    public void should_return_ticket_with_correct_credentials_when_user_gave_six_numbers_in_range_of_1_to_99(){
+    public void should_return_ticket_with_correct_credentials_when_user_gave_six_numbers_in_range_of_1_to_99() {
         //given
         NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, dateToGenerateDrawDate);
         List<Integer> numbersFromUser = List.of(1, 2, 3, 4, 5, 6);
@@ -69,11 +71,9 @@ public class NumberReceiverFacadeTest {
     }
 
 
-
-
     @ParameterizedTest
     @MethodSource("createListsWithWrongAmountOfNumbers")
-    public void should_return_invalid_ticket_when_user_gave_not_six_numbers(List<Integer> numbersFromUser){
+    public void should_return_invalid_ticket_when_user_gave_not_six_numbers(List<Integer> numbersFromUser) {
         // given
         NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, LocalDateTime.now());
 
@@ -98,7 +98,7 @@ public class NumberReceiverFacadeTest {
 
 
     @Test
-    public void should_return_invalid_ticket_when_user_gave_at_least_one_duplicate(){
+    public void should_return_invalid_ticket_when_user_gave_at_least_one_duplicate() {
         // given
         NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, LocalDateTime.now());
         List<Integer> numbersFromUser = List.of(1, 2, 3, 4, 4, 5);
@@ -159,7 +159,7 @@ public class NumberReceiverFacadeTest {
         int generatedIdByOneRepetition = 3;
 
         //when
-        for(int i = 0; i < repetitions; i++) {
+        for (int i = 0; i < repetitions; i++) {
             UUID id = numberReceiverFacade.inputNumbers(List.of(1, 2, 3, 4, 5, 6)).id().get();
             allUsersId.add(id);
             id = numberReceiverFacade.inputNumbers(List.of(1, 3, 5, 7, 9, 11)).id().get();

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pl.lotto.numbergenerator.NumbersGeneratorFacade;
 import pl.lotto.numberreceiver.NumberReceiverFacade;
 import pl.lotto.resultchecker.dto.LotteryResultDto;
+
 import java.util.UUID;
 
 @Service

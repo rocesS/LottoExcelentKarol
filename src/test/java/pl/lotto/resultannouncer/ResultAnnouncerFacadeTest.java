@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import pl.lotto.resultannouncer.dto.LotteryAnnouncementDto;
 import pl.lotto.resultchecker.ResultCheckerFacade;
 import pl.lotto.resultchecker.dto.LotteryResultDto;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;

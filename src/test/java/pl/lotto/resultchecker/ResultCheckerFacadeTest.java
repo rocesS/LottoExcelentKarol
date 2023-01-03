@@ -7,6 +7,7 @@ import pl.lotto.numbergenerator.dto.WinningNumbersDto;
 import pl.lotto.numberreceiver.NumberReceiverFacade;
 import pl.lotto.numberreceiver.dto.LotteryTicketDto;
 import pl.lotto.resultchecker.dto.LotteryResultDto;
+
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
@@ -41,7 +42,7 @@ class ResultCheckerFacadeTest {
     void should_return_correct_lottery_results_with_winning_message_when_user_won() {
         //given
         LotteryTicketDto lotteryTicketDto = new LotteryTicketDto(Optional.of(UUID.randomUUID()), (List.of(1, 2, 3, 4, 5, 6)),
-                 Optional.of(randomDate), "valid");
+                Optional.of(randomDate), "valid");
         WinningNumbersDto winningNumbersDto = new WinningNumbersDto(Optional.of(List.of(1, 2, 3, 4, 5, 6)));
 
         given(numberReceiverFacade.retrieveUserNumbers(any(UUID.class))).willReturn(lotteryTicketDto);
@@ -94,6 +95,4 @@ class ResultCheckerFacadeTest {
                 () -> assertThat(result.hitNumbers().isPresent()).isEqualTo(false),
                 () -> assertThat(result.message()).isEqualTo("invalid id"));
     }
-
-
 }

@@ -3,6 +3,7 @@ package pl.lotto.numbergenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.lotto.numbergenerator.dto.WinningNumbersDto;
+
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;

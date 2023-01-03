@@ -5,5 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-record LotteryTicket (Optional<UUID> id, List<Integer> numbers, Optional<LocalDateTime> drawDate, String message) {}
+record LotteryTicket(Optional<UUID> id, List<Integer> numbers, Optional<LocalDateTime> drawDate, String message) {
+}
 

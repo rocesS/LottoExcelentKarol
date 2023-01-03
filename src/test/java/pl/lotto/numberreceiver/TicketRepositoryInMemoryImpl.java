@@ -1,6 +1,7 @@
 package pl.lotto.numberreceiver;
 
 import pl.lotto.numberreceiver.dto.LotteryTicketDto;
+
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -19,7 +20,6 @@ class TicketRepositoryInMemoryImpl implements TicketRepository {
     public LotteryTicket getTicketById(UUID id) {
         return userNumbers.get(id);
     }
-
 
 
     @Override

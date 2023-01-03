@@ -7,5 +7,4 @@ interface WinningNumbersRepository {
     void addWinningNumbers(LocalDateTime drawDate, List<Integer> numbers);
 
     WinningNumbers getWinningNumbers(LocalDateTime drawDate);
-
 }

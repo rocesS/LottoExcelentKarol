@@ -1,8 +1,9 @@
 package pl.lotto.numbergenerator;
 
-import org.springframework.context.annotation.Configuration;
+
 import org.springframework.stereotype.Service;
 import pl.lotto.numbergenerator.dto.WinningNumbersDto;
+
 import java.time.LocalDateTime;
 
 @Service
