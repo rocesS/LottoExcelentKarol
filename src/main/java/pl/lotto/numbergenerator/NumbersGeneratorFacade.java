@@ -6,7 +6,6 @@ import pl.lotto.numbergenerator.dto.WinningNumbersDto;
 
 import java.time.LocalDateTime;
 
-@Service
 public class NumbersGeneratorFacade {
     private final NumbersRetriever numbersRetriever;
 

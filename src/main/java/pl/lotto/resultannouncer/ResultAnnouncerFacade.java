@@ -7,7 +7,6 @@ import pl.lotto.resultchecker.dto.LotteryResultDto;
 
 import java.util.UUID;
 
-@Service
 public class ResultAnnouncerFacade {
 
     ResultCheckerFacade resultCheckerFacade;

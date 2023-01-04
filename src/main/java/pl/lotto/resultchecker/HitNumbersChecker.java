@@ -12,7 +12,6 @@ import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.UUID;
 
-@Service
 class HitNumbersChecker {
     private static final int minWonNumbers = 3;
     NumberReceiverFacade numberReceiverFacade;

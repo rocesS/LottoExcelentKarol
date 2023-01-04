@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
-@Service
 class TicketGenerator {
 
     IdGenerator idGenerator;

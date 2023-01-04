@@ -7,7 +7,6 @@ import pl.lotto.resultchecker.dto.LotteryResultDto;
 
 import java.util.UUID;
 
-@Service
 public class ResultCheckerFacade {
     NumberReceiverFacade numberReceiverFacade;
     NumbersGeneratorFacade numbersGeneratorFacade;

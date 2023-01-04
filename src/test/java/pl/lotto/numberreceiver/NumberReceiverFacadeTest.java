@@ -1,7 +1,10 @@
 package pl.lotto.numberreceiver;
 
+import java.time.Clock;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 import java.util.stream.Stream;
@@ -21,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class NumberReceiverFacadeTest {
 
     TicketRepository ticketRepository;
+    Clock clock;
     LocalDateTime dateToGenerateDrawDate;
     LocalDateTime drawDate;
 
@@ -28,6 +32,7 @@ public class NumberReceiverFacadeTest {
     void init() {
         ticketRepository = new TicketRepositoryInMemoryImpl();
         dateToGenerateDrawDate = LocalDateTime.of(2017, 2, 13, 15, 56);
+        clock = Clock.fixed(dateToGenerateDrawDate.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
         drawDate = dateToGenerateDrawDate.with(TemporalAdjusters.next(DayOfWeek.SATURDAY)).withHour(12).withMinute(0).withSecond(0).withNano(0);
     }
 
@@ -35,7 +40,7 @@ public class NumberReceiverFacadeTest {
     @MethodSource("createListsWithNumbersOutOfRange")
     public void should_return_invalid_ticket_when_user_gave_six_numbers_out_of_range(List<Integer> numbersFromUser) {
         //given
-        NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, dateToGenerateDrawDate);
+        NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, clock);
 
         //when
         LotteryTicketDto result = numberReceiverFacade.inputNumbers(numbersFromUser);
@@ -57,7 +62,7 @@ public class NumberReceiverFacadeTest {
     @Test
     public void should_return_ticket_with_correct_credentials_when_user_gave_six_numbers_in_range_of_1_to_99() {
         //given
-        NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, dateToGenerateDrawDate);
+        NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, clock);
         List<Integer> numbersFromUser = List.of(1, 2, 3, 4, 5, 6);
 
         //when
@@ -75,7 +80,7 @@ public class NumberReceiverFacadeTest {
     @MethodSource("createListsWithWrongAmountOfNumbers")
     public void should_return_invalid_ticket_when_user_gave_not_six_numbers(List<Integer> numbersFromUser) {
         // given
-        NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, LocalDateTime.now());
+        NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, Clock.systemUTC());
 
         // when
         LotteryTicketDto result = numberReceiverFacade.inputNumbers(numbersFromUser);
@@ -100,7 +105,7 @@ public class NumberReceiverFacadeTest {
     @Test
     public void should_return_invalid_ticket_when_user_gave_at_least_one_duplicate() {
         // given
-        NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, LocalDateTime.now());
+        NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, Clock.systemUTC());
         List<Integer> numbersFromUser = List.of(1, 2, 3, 4, 4, 5);
 
         // when
@@ -116,7 +121,7 @@ public class NumberReceiverFacadeTest {
     @Test
     public void should_return_all_numbers_when_draw_date_was_given() {
         //given
-        NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, dateToGenerateDrawDate);
+        NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, clock);
         List<Integer> numbersFromUser = List.of(1, 2, 3, 4, 5, 6);
         List<Integer> numbersFromUser2 = List.of(5, 2, 3, 4, 1, 34);
         List<Integer> numbersFromUser3 = List.of(1, 2, 3, 15, 8, 12);
@@ -135,7 +140,7 @@ public class NumberReceiverFacadeTest {
     @Test
     public void should_return_zero_numbers_when_all_added_numbers_were_invalid() {
         //given
-        NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, dateToGenerateDrawDate);
+        NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, clock);
         List<Integer> numbersFromUser = List.of(0, 2, 3, 4, 5, 6);
         List<Integer> numbersFromUser2 = List.of(5, 2, 3, 4, 1, 100);
         List<Integer> numbersFromUser3 = List.of(1, 2, 15, 8, 12);
@@ -153,7 +158,7 @@ public class NumberReceiverFacadeTest {
     @Test
     void should_generate_unique_id() {
         //given
-        NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, LocalDateTime.now());
+        NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, clock);
         Set<UUID> allUsersId = new HashSet<>();
         int repetitions = 50;
         int generatedIdByOneRepetition = 3;

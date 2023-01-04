@@ -1,14 +1,11 @@
 package pl.lotto.numberreceiver;
 
-import org.springframework.stereotype.Service;
-import pl.lotto.numberreceiver.dto.AllUserNumbersByDateDto;
-import pl.lotto.numberreceiver.dto.LotteryTicketDto;
-
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.UUID;
+import pl.lotto.numberreceiver.dto.AllUserNumbersByDateDto;
+import pl.lotto.numberreceiver.dto.LotteryTicketDto;
 
-@Service
 public class NumberReceiverFacade {
     NumberValidator numberValidator;
     TicketGenerator ticketGenerator;
