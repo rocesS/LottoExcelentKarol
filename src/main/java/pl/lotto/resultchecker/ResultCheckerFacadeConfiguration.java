@@ -15,7 +15,6 @@ class ResultCheckerFacadeConfiguration {
     }
 
     ResultCheckerFacade createFacadeForTest(NumberReceiverFacade numberReceiverFacade, NumbersGeneratorFacade numbersGeneratorFacade) {
-        HitNumbersChecker hitNumbersChecker = new HitNumbersChecker(numberReceiverFacade, numbersGeneratorFacade);
-        return new ResultCheckerFacade(numberReceiverFacade, numbersGeneratorFacade, hitNumbersChecker);
+        return resultCheckerFacade(numberReceiverFacade, numbersGeneratorFacade);
     }
 }

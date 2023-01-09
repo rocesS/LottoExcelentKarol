@@ -43,7 +43,7 @@ class ResultCheckerFacadeTest {
         //given
         LotteryTicketDto lotteryTicketDto = new LotteryTicketDto(Optional.of(UUID.randomUUID()), (List.of(1, 2, 3, 4, 5, 6)),
                 Optional.of(randomDate), "valid");
-        WinningNumbersDto winningNumbersDto = new WinningNumbersDto(Optional.of(List.of(1, 2, 3, 4, 5, 6)));
+        WinningNumbersDto winningNumbersDto = new WinningNumbersDto(Optional.of(UUID.randomUUID()), Optional.of(List.of(1, 2, 3, 4, 5, 6)), randomDate);
 
         given(numberReceiverFacade.retrieveUserNumbers(any(UUID.class))).willReturn(lotteryTicketDto);
         given(numbersGeneratorFacade.retrieveWonNumbers(randomDate)).willReturn(winningNumbersDto);
@@ -63,7 +63,7 @@ class ResultCheckerFacadeTest {
         //given
         LotteryTicketDto lotteryTicketDto = new LotteryTicketDto(Optional.of(UUID.randomUUID()), (List.of(1, 2, 8, 9, 10, 11)),
                 Optional.of(randomDate), "valid");
-        WinningNumbersDto winningNumbersDto = new WinningNumbersDto(Optional.of(List.of(1, 2, 3, 4, 5, 6)));
+        WinningNumbersDto winningNumbersDto = new WinningNumbersDto(Optional.of(UUID.randomUUID()), Optional.of(List.of(1, 2, 3, 4, 5, 6)), randomDate);
 
         given(numberReceiverFacade.retrieveUserNumbers(any(UUID.class))).willReturn(lotteryTicketDto);
         given(numbersGeneratorFacade.retrieveWonNumbers(randomDate)).willReturn(winningNumbersDto);
@@ -81,7 +81,7 @@ class ResultCheckerFacadeTest {
     @Test
     void should_return_result_with_empty_credentials_and_invalid_message_when_user_gave_invalid_id() {
         //given
-        WinningNumbersDto winningNumbersDto = new WinningNumbersDto(Optional.of(List.of(1, 2, 3, 4, 5, 6)));
+        WinningNumbersDto winningNumbersDto = new WinningNumbersDto(Optional.of(UUID.randomUUID()), Optional.of(List.of(1, 2, 3, 4, 5, 6)), randomDate);
 
         given(numberReceiverFacade.retrieveUserNumbers(any(UUID.class))).willReturn(null);
         given(numbersGeneratorFacade.retrieveWonNumbers(randomDate)).willReturn(winningNumbersDto);

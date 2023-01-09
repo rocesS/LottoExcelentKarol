@@ -1,7 +1,5 @@
 package pl.lotto.numberreceiver;
 
-import org.springframework.stereotype.Service;
-
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;

@@ -1,7 +1,5 @@
 package pl.lotto.numberreceiver;
 
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,10 +20,10 @@ class TicketGenerator {
     LotteryTicket generateTicket(Collection<Integer> numbers) {
         UUID id = idGenerator.generateId();
         LocalDateTime drawDate = drawDateGenerator.generateDrawDate();
-        return new LotteryTicket(Optional.of(id), new ArrayList<>(numbers), Optional.of(drawDate), "valid");
+        return new LotteryTicket(id, new ArrayList<>(numbers), drawDate, "valid");
     }
 
     LotteryTicket generateInvalidTicket(Collection<Integer> numbers) {
-        return new LotteryTicket(Optional.empty(), new ArrayList<>(numbers), Optional.empty(), "invalid");
+        return new LotteryTicket(null, new ArrayList<>(numbers), null, "invalid");
     }
 }

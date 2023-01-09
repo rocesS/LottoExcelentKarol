@@ -17,6 +17,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import pl.lotto.numberreceiver.dto.AllUserNumbersByDateDto;
 import pl.lotto.numberreceiver.dto.LotteryTicketDto;
 
+import static java.time.DayOfWeek.SATURDAY;
+import static java.time.temporal.TemporalAdjusters.next;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -25,15 +27,15 @@ public class NumberReceiverFacadeTest {
 
     TicketRepository ticketRepository;
     Clock clock;
-    LocalDateTime dateToGenerateDrawDate;
+    LocalDateTime randomDate;
     LocalDateTime drawDate;
 
     @BeforeEach
     void init() {
         ticketRepository = new TicketRepositoryInMemoryImpl();
-        dateToGenerateDrawDate = LocalDateTime.of(2017, 2, 13, 15, 56);
-        clock = Clock.fixed(dateToGenerateDrawDate.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
-        drawDate = dateToGenerateDrawDate.with(TemporalAdjusters.next(DayOfWeek.SATURDAY)).withHour(12).withMinute(0).withSecond(0).withNano(0);
+        randomDate = LocalDateTime.of(2017, 2, 13, 15, 56);
+        clock = Clock.fixed(randomDate.toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
+        drawDate = LocalDateTime.now(clock).with(next(SATURDAY)).withHour(12).withMinute(0);
     }
 
     @ParameterizedTest

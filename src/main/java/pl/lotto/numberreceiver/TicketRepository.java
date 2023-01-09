@@ -1,13 +1,16 @@
 package pl.lotto.numberreceiver;
 
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
-interface TicketRepository {
+@Repository
+interface TicketRepository extends MongoRepository<LotteryTicket, UUID> {
 
     void addUserNumbers(UUID id, LotteryTicket lotteryTicket);
-
-    LotteryTicket getTicketById(UUID id);
-
+    //LotteryTicket getLotteryTicketById(UUID id);
     AllUserNumbersByDate retrieveAllUsersByDate(LocalDateTime date);
 }
