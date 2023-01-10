@@ -1,10 +1,9 @@
 package pl.lotto.numberreceiver;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
-import pl.lotto.numberreceiver.dto.AllUserNumbersByDateDto;
+
 import pl.lotto.numberreceiver.dto.LotteryTicketDto;
 
 public class NumberReceiverFacade {
@@ -21,8 +20,8 @@ public class NumberReceiverFacade {
     public LotteryTicketDto inputNumbers(Collection<Integer> numbersFromUser) {
         if (numberValidator.validate(numbersFromUser)) {
             LotteryTicket lotteryTicket = ticketGenerator.generateTicket(numbersFromUser);
-            if (lotteryTicket.id() != null) {
-                ticketRepository.addUserNumbers(lotteryTicket.id(), lotteryTicket);
+            if (lotteryTicket.getId() != null) {
+                ticketRepository.insert(lotteryTicket);
             }
             return DtoMapper.mapLotteryTicketToDto(lotteryTicket);
         }
@@ -33,10 +32,6 @@ public class NumberReceiverFacade {
     public LotteryTicketDto retrieveUserNumbers(UUID id) {
         Optional<LotteryTicket> lotteryTicket = ticketRepository.findById(id);
         return lotteryTicket.map(DtoMapper::mapLotteryTicketToDto).orElse(null);
-    }
-
-    public AllUserNumbersByDateDto retrieveUserNumbers(LocalDateTime drawDate) {
-        return DtoMapper.mapAllUserNumbersByDateToDto(ticketRepository.retrieveAllUsersByDate(drawDate));
     }
 
 }

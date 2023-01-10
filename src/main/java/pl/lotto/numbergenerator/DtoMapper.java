@@ -6,6 +6,6 @@ import java.util.Optional;
 
 class DtoMapper {
     static WinningNumbersDto mapWinningNumbersToDto(WinningNumbers winningNumbers) {
-        return new WinningNumbersDto(Optional.ofNullable(winningNumbers.id()), Optional.ofNullable(winningNumbers.winningNumbers()), winningNumbers.drawDate());
+        return new WinningNumbersDto(Optional.ofNullable(winningNumbers.getWinningNumbers()), winningNumbers.getDrawDate());
     }
 }

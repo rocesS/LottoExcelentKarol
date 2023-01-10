@@ -1,11 +1,9 @@
 package pl.lotto.numberreceiver;
 
 import java.time.Clock;
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -14,14 +12,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import pl.lotto.numberreceiver.dto.AllUserNumbersByDateDto;
 import pl.lotto.numberreceiver.dto.LotteryTicketDto;
 
 import static java.time.DayOfWeek.SATURDAY;
 import static java.time.temporal.TemporalAdjusters.next;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-
 
 public class NumberReceiverFacadeTest {
 
@@ -120,41 +116,27 @@ public class NumberReceiverFacadeTest {
                 () -> assertThat(result.message()).isEqualTo("invalid"));
     }
 
-    @Test
-    public void should_return_all_numbers_when_draw_date_was_given() {
+
+    @ParameterizedTest
+    @MethodSource("createListsWithProperAmountOfNumbers")
+    public void should_add_ticket_to_repository_when_valid_numbers_given(List<Integer> numbersFromUser) {
         //given
         NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, clock);
-        List<Integer> numbersFromUser = List.of(1, 2, 3, 4, 5, 6);
-        List<Integer> numbersFromUser2 = List.of(5, 2, 3, 4, 1, 34);
-        List<Integer> numbersFromUser3 = List.of(1, 2, 3, 15, 8, 12);
 
         //when
-        numberReceiverFacade.inputNumbers(numbersFromUser);
-        numberReceiverFacade.inputNumbers(numbersFromUser2);
-        numberReceiverFacade.inputNumbers(numbersFromUser3);
-        AllUserNumbersByDateDto result = numberReceiverFacade.retrieveUserNumbers(drawDate);
+        LotteryTicketDto ticket = numberReceiverFacade.inputNumbers(numbersFromUser);
+        LotteryTicketDto result = numberReceiverFacade.retrieveUserNumbers(ticket.id().get());
 
         //Then
-        assertThat(result.allUserNumbers().size()).isEqualTo(3);
+        assertThat(result.message()).isEqualTo("valid");
     }
 
-
-    @Test
-    public void should_return_zero_numbers_when_all_added_numbers_were_invalid() {
-        //given
-        NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, clock);
-        List<Integer> numbersFromUser = List.of(0, 2, 3, 4, 5, 6);
-        List<Integer> numbersFromUser2 = List.of(5, 2, 3, 4, 1, 100);
-        List<Integer> numbersFromUser3 = List.of(1, 2, 15, 8, 12);
-
-        //when
-        numberReceiverFacade.inputNumbers(numbersFromUser);
-        numberReceiverFacade.inputNumbers(numbersFromUser2);
-        numberReceiverFacade.inputNumbers(numbersFromUser3);
-        AllUserNumbersByDateDto result = numberReceiverFacade.retrieveUserNumbers(drawDate);
-
-        //then
-        assertThat(result.allUserNumbers().size()).isEqualTo(0);
+    private static Stream<Arguments> createListsWithProperAmountOfNumbers() {
+        return Stream.of(
+                Arguments.of(List.of(1, 2, 3, 4, 5, 6)),
+                Arguments.of(List.of(11, 22, 33, 44, 55, 66)),
+                Arguments.of(List.of(1, 22, 38, 4, 59, 99))
+        );
     }
 
     @Test

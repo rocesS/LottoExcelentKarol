@@ -3,7 +3,6 @@ package pl.lotto.numberreceiver;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
 import java.util.UUID;
 
 class TicketGenerator {

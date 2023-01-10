@@ -1,4 +1,6 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://admin:admin@mongo_db/lotto   # mongodb://[username:password@]host1[:port1]/[database-name]
+      uri: mongodb://root:example@localhost:27017/lotto?authSource=admin
+
+

@@ -15,26 +15,17 @@ import java.util.stream.Collectors;
 
 class TicketRepositoryInMemoryImpl implements TicketRepository {
 
-    private final Map<UUID, LotteryTicket> userNumbers = new HashMap<>();
-
-    @Override
-    public void addUserNumbers(UUID id, LotteryTicket lotteryTicket) {
-        userNumbers.put(id, lotteryTicket);
-    }
-
-    @Override
-    public AllUserNumbersByDate retrieveAllUsersByDate(LocalDateTime date) {
-        List<LotteryTicketDto> numbers = userNumbers.values()
-                .stream()
-                .filter(lotteryTicket -> lotteryTicket.drawDate().compareTo(date) == 0)
-                .map(DtoMapper::mapLotteryTicketToDto)
-                .collect(Collectors.toList());
-        return new AllUserNumbersByDate(numbers);
-    }
+    private final Map<UUID, LotteryTicket> lotteryTickets = new HashMap<>();
 
     @Override
     public <S extends LotteryTicket> S insert(S entity) {
-        return null;
+        lotteryTickets.put(entity.getId(), entity);
+        return entity;
+    }
+
+    @Override
+    public Optional<LotteryTicket> findById(UUID uuid) {
+        return Optional.ofNullable(lotteryTickets.get(uuid));
     }
 
     @Override
@@ -85,11 +76,6 @@ class TicketRepositoryInMemoryImpl implements TicketRepository {
     @Override
     public <S extends LotteryTicket> List<S> saveAll(Iterable<S> entities) {
         return null;
-    }
-
-    @Override
-    public Optional<LotteryTicket> findById(UUID uuid) {
-        return Optional.empty();
     }
 
     @Override

@@ -10,22 +10,18 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Function;
 
-public class WinningNumbersRepositoryTest implements WinningNumbersRepository {
+class WinningNumbersRepositoryTest implements WinningNumbersRepository {
     Map<LocalDateTime, WinningNumbers> winningNumbers = new HashMap<>();
 
     @Override
-    public void addWinningNumbers(LocalDateTime drawDate, List<Integer> numbers) {
-        winningNumbers.put(drawDate, new WinningNumbers(UUID.randomUUID(), numbers, drawDate));
-    }
-
-    @Override
-    public WinningNumbers getWinningNumbers(LocalDateTime drawDate) {
-        return winningNumbers.get(drawDate);
-    }
-
-    @Override
     public <S extends WinningNumbers> S insert(S entity) {
-        return null;
+        winningNumbers.put(entity.getDrawDate(), entity);
+        return entity;
+    }
+
+    @Override
+    public WinningNumbers findByDrawDate(LocalDateTime drawDate) {
+        return winningNumbers.get(drawDate);
     }
 
     @Override
