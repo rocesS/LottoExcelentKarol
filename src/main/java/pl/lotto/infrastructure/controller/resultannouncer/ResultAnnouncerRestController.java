@@ -1,4 +1,4 @@
-package pl.lotto.infrastructure.controller.numberreceiver;
+package pl.lotto.infrastructure.controller.resultannouncer;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,14 +12,15 @@ import java.util.UUID;
 
 @RestController
 public class ResultAnnouncerRestController {
-    ResultAnnouncerFacade resultAnnouncerFacade;
+    private final ResultAnnouncerFacade resultAnnouncerFacade;
 
     ResultAnnouncerRestController(ResultAnnouncerFacade resultAnnouncerFacade) {
         this.resultAnnouncerFacade = resultAnnouncerFacade;
     }
 
-    @PostMapping
-    ResponseEntity<LotteryAnnouncementDto> checkWinner(@RequestBody UUID id) {
+    @PostMapping("/announcement")
+    ResponseEntity<LotteryAnnouncementDto> checkWinner(@RequestBody Request request) {
+        UUID id = request.id();
         LotteryAnnouncementDto announcement = resultAnnouncerFacade.checkWinner(id);
         if (announcement.message().equals("you won!")) {
             return ResponseEntity
@@ -30,6 +31,7 @@ public class ResultAnnouncerRestController {
                     .status(HttpStatus.BAD_REQUEST)
                     .body(announcement);
         }
+
     }
 
 }

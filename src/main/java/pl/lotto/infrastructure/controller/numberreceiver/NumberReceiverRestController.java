@@ -13,14 +13,15 @@ import pl.lotto.numberreceiver.dto.LotteryTicketDto;
 @RestController
 public class NumberReceiverRestController {
 
-    NumberReceiverFacade numberReceiverFacade;
+    private final NumberReceiverFacade numberReceiverFacade;
 
     NumberReceiverRestController(NumberReceiverFacade numberReceiverFacade) {
         this.numberReceiverFacade = numberReceiverFacade;
     }
 
     @PostMapping("/numbers")
-    public ResponseEntity<LotteryTicketDto> inputNumbers(@RequestBody List<Integer> numbers) {
+    public ResponseEntity<LotteryTicketDto> inputNumbers(@RequestBody Request request) {
+        List<Integer> numbers = request.numbers();
         LotteryTicketDto ticket = numberReceiverFacade.inputNumbers(numbers);
         if (ticket.message().equals("valid")) {
             return ResponseEntity
