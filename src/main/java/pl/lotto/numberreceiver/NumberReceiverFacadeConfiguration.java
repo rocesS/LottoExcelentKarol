@@ -13,15 +13,15 @@ class NumberReceiverFacadeConfiguration {
         return Clock.systemUTC();
     }
 
-    @Bean
-    IdGenerator idGenerator() {
-        return new IdGenerator();
-    }
+//    @Bean
+//    IdGenerator idGenerator() {
+//        return new IdGenerator();
+//    }
 
     @Bean
     NumberReceiverFacade numberReceiverFacade(TicketRepository ticketRepository, Clock clock) {
         NumberValidator numberValidator = new NumberValidator();
-        TicketGenerator ticketGenerator = new TicketGenerator(idGenerator(), new DrawDateGenerator(LocalDateTime.now(clock)));
+        TicketGenerator ticketGenerator = new TicketGenerator(new IdGenerator(), new DrawDateGenerator(LocalDateTime.now(clock)));
         return new NumberReceiverFacade(numberValidator, ticketGenerator, ticketRepository);
     }
 

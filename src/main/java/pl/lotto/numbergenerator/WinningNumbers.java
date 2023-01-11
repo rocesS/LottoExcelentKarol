@@ -10,7 +10,7 @@ import java.util.List;
 @Document(collection = "winningNumbers")
 class WinningNumbers {
     @Id
-    private Integer id;
+    private String id;
     private final List<Integer> winningNumbers;
     private final LocalDateTime drawDate;
 

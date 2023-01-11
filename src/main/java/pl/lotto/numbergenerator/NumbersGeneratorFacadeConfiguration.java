@@ -14,7 +14,8 @@ class NumbersGeneratorFacadeConfiguration {
     NumbersGeneratorFacade numbersGeneratorFacade(WinningNumbersRepository winningNumbersRepository, Clock clock) {
         NumbersGenerator numbersGenerator = new NumbersGenerator();
         DrawDateChecker drawDateChecker = new DrawDateChecker(LocalDateTime.now(clock));
-        return new NumbersGeneratorFacade(new WinningNumbersRetriever(winningNumbersRepository, numbersGenerator, drawDateChecker));
+        WinningNumbersRetriever winningNumbersRetriever = new WinningNumbersRetriever(winningNumbersRepository, numbersGenerator, drawDateChecker);
+        return new NumbersGeneratorFacade(winningNumbersRetriever);
     }
 
     NumbersGeneratorFacade createFacadeForTest(WinningNumbersRepository winningNumbersRepository, Clock clock) {
