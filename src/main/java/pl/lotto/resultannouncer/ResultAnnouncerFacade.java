@@ -1,6 +1,5 @@
 package pl.lotto.resultannouncer;
 
-import org.springframework.stereotype.Service;
 import pl.lotto.resultannouncer.dto.LotteryAnnouncementDto;
 import pl.lotto.resultchecker.ResultCheckerFacade;
 import pl.lotto.resultchecker.dto.LotteryResultDto;

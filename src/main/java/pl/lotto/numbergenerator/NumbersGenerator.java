@@ -1,7 +1,5 @@
 package pl.lotto.numbergenerator;
 
-import org.springframework.stereotype.Service;
-
 import java.util.*;
 
 class NumbersGenerator {
