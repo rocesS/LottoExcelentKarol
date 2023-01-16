@@ -11,10 +11,19 @@ import java.time.LocalDateTime;
 class NumbersGeneratorFacadeConfiguration {
 
     @Bean
+    NumbersGenerator numbersGenerator() {
+        return new NumbersGenerator();
+    }
+
+    @Bean
+    DrawScheduler drawScheduler(NumbersGenerator numbersGenerator, WinningNumbersRepository winningNumbersRepository, Clock clock) {
+        return new DrawScheduler(numbersGenerator, winningNumbersRepository, clock);
+    }
+
+    @Bean
     NumbersGeneratorFacade numbersGeneratorFacade(WinningNumbersRepository winningNumbersRepository, Clock clock) {
-        NumbersGenerator numbersGenerator = new NumbersGenerator();
-        DrawDateChecker drawDateChecker = new DrawDateChecker(LocalDateTime.now(clock));
-        WinningNumbersRetriever winningNumbersRetriever = new WinningNumbersRetriever(winningNumbersRepository, numbersGenerator, drawDateChecker);
+        DrawDateChecker drawDateChecker = new DrawDateChecker(clock);
+        WinningNumbersRetriever winningNumbersRetriever = new WinningNumbersRetriever(winningNumbersRepository, numbersGenerator(), drawDateChecker);
         return new NumbersGeneratorFacade(winningNumbersRetriever);
     }
 

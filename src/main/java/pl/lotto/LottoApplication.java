@@ -2,11 +2,15 @@ package pl.lotto;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-//@EnableMongoRepositories(basePackageClasses = {pl.lotto.numberreceiver.TicketRepository.class, pl.lotto.numbergenerator.WinningNumbersRepository.class})
+import java.time.LocalDateTime;
+
+
+@EnableScheduling
 @SpringBootApplication()
 public class LottoApplication {
+
     public static void main(String[] args) {
         SpringApplication.run(LottoApplication.class, args);
     }

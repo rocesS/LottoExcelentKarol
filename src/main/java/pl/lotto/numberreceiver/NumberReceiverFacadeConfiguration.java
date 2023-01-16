@@ -1,27 +1,23 @@
 package pl.lotto.numberreceiver;
 
-import java.time.Clock;
-import java.time.LocalDateTime;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.time.Clock;
+import java.time.ZoneId;
 
 @Configuration
 class NumberReceiverFacadeConfiguration {
 
     @Bean
     Clock clock() {
-        return Clock.systemUTC();
+        return Clock.system(ZoneId.systemDefault());
     }
-
-//    @Bean
-//    IdGenerator idGenerator() {
-//        return new IdGenerator();
-//    }
 
     @Bean
     NumberReceiverFacade numberReceiverFacade(TicketRepository ticketRepository, Clock clock) {
         NumberValidator numberValidator = new NumberValidator();
-        TicketGenerator ticketGenerator = new TicketGenerator(new IdGenerator(), new DrawDateGenerator(LocalDateTime.now(clock)));
+        TicketGenerator ticketGenerator = new TicketGenerator(new IdGenerator(), new DrawDateGenerator(), clock);
         return new NumberReceiverFacade(numberValidator, ticketGenerator, ticketRepository);
     }
 

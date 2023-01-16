@@ -20,7 +20,7 @@ public class NumberReceiverFacade {
     public LotteryTicketDto inputNumbers(Collection<Integer> numbersFromUser) {
         if (numberValidator.validate(numbersFromUser)) {
             LotteryTicket lotteryTicket = ticketGenerator.generateTicket(numbersFromUser);
-            if (lotteryTicket.getId() != null) {
+            if (lotteryTicket.id() != null) {
                 ticketRepository.insert(lotteryTicket);
             }
             return DtoMapper.mapLotteryTicketToDto(lotteryTicket);

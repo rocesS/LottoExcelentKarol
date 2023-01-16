@@ -78,7 +78,7 @@ public class NumberReceiverFacadeTest {
     @MethodSource("createListsWithWrongAmountOfNumbers")
     public void should_return_invalid_ticket_when_user_gave_not_six_numbers(List<Integer> numbersFromUser) {
         // given
-        NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, Clock.systemUTC());
+        NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, clock);
 
         // when
         LotteryTicketDto result = numberReceiverFacade.inputNumbers(numbersFromUser);
@@ -103,7 +103,7 @@ public class NumberReceiverFacadeTest {
     @Test
     public void should_return_invalid_ticket_when_user_gave_at_least_one_duplicate() {
         // given
-        NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, Clock.systemUTC());
+        NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacadeConfiguration().createFacadeForTest(ticketRepository, clock);
         List<Integer> numbersFromUser = List.of(1, 2, 3, 4, 4, 5);
 
         // when

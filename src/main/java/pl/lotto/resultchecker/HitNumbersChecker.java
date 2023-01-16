@@ -1,6 +1,5 @@
 package pl.lotto.resultchecker;
 
-import org.springframework.stereotype.Service;
 import pl.lotto.numbergenerator.NumbersGeneratorFacade;
 import pl.lotto.numbergenerator.dto.WinningNumbersDto;
 import pl.lotto.numberreceiver.NumberReceiverFacade;
@@ -42,8 +41,7 @@ class HitNumbersChecker {
             }
         }
 
-
-        return null;
+        return new LotteryResult(Optional.empty(), Optional.empty(), OptionalInt.empty(), "the draw has not yet taken place");
     }
 
     private int checkHowManyNumbersWasHit(List<Integer> userNumbers, List<Integer> winningNumbers) {

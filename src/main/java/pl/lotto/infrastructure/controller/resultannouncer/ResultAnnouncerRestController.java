@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import pl.lotto.resultannouncer.ResultAnnouncerFacade;
 import pl.lotto.resultannouncer.dto.LotteryAnnouncementDto;
+import pl.lotto.resultannouncer.dto.RequestDto;
 
 import java.util.UUID;
 
@@ -19,7 +20,7 @@ public class ResultAnnouncerRestController {
     }
 
     @PostMapping("/announcement")
-    ResponseEntity<LotteryAnnouncementDto> checkWinner(@RequestBody Request request) {
+    ResponseEntity<LotteryAnnouncementDto> checkWinner(@RequestBody RequestDto request) {
         UUID id = request.id();
         LotteryAnnouncementDto announcement = resultAnnouncerFacade.checkWinner(id);
         if (announcement.message().equals("you won!")) {

@@ -5,12 +5,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
-import pl.lotto.numberreceiver.dto.LotteryTicketDto;
 
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 
 class TicketRepositoryInMemoryImpl implements TicketRepository {
@@ -19,7 +16,7 @@ class TicketRepositoryInMemoryImpl implements TicketRepository {
 
     @Override
     public <S extends LotteryTicket> S insert(S entity) {
-        lotteryTickets.put(entity.getId(), entity);
+        lotteryTickets.put(entity.id(), entity);
         return entity;
     }
 

@@ -19,16 +19,10 @@ class WinningNumbersRetriever {
         boolean areWinningNumbersAvailable = winningNumbers != null;
 
         // if the draw has already taken place and winning numbers are in repo
-        if (drawDateChecker.isDateAfterDraw(drawDate) && areWinningNumbersAvailable) {
+        if (drawDateChecker.isAfterDraw(drawDate) && areWinningNumbersAvailable) {
             return winningNumbers;
         }
-        // if the draw date is in the future and the draw has not yet taken place
-        else if (drawDateChecker.isDateBeforeDraw(drawDate) && !areWinningNumbersAvailable) {
-            List<Integer> numbers = numbersGenerator.generateNumbers();
-            winningNumbersRepository.insert(new WinningNumbers(numbers, drawDate));
-            return null;
-        }
-        // when the draw date has passed and there is no generated numbers, simply return null
+
         return new WinningNumbers(null, drawDate);
     }
 }

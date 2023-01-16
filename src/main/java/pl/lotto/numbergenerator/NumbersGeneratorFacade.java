@@ -12,6 +12,7 @@ public class NumbersGeneratorFacade {
     }
 
     public WinningNumbersDto retrieveWonNumbers(LocalDateTime drawDate) {
-        return DtoMapper.mapWinningNumbersToDto(winningNumbersRetriever.retrieveWonNumbers(drawDate));
+        WinningNumbers winningNumbers = winningNumbersRetriever.retrieveWonNumbers(drawDate);
+        return DtoMapper.mapWinningNumbersToDto(winningNumbers);
     }
 }

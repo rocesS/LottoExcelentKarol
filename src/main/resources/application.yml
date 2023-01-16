@@ -1,6 +1,9 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://root:example@localhost:27017/lotto?authSource=admin
+      uri: mongodb://admin:admin@localhost:27017/lotto
+  lotto:
+    cron: "0 0 12 ? * SAT"
+
 
 

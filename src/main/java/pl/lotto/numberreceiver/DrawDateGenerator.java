@@ -1,19 +1,13 @@
 package pl.lotto.numberreceiver;
 
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 
 
 class DrawDateGenerator {
 
-    LocalDateTime date;
-
-    DrawDateGenerator(LocalDateTime date) {
-        this.date = date;
-    }
-
-    LocalDateTime generateDrawDate() {
-        return date.with(TemporalAdjusters.next(DayOfWeek.SATURDAY)).withHour(12).withMinute(0).withSecond(0).withNano(0);
+    LocalDateTime generateDrawDate(LocalDateTime currentDate) {
+        return currentDate.with(TemporalAdjusters.next(DrawTime.DAY.getDayOfWeek()))
+                .withHour(DrawTime.HOURS.getValue()).withMinute(DrawTime.MINUTES.getValue()).withSecond(DrawTime.SECONDS.getValue());
     }
 }
