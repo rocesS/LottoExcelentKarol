@@ -44,9 +44,9 @@ public class NumberReceiverFacadeTest {
         LotteryTicketDto result = numberReceiverFacade.inputNumbers(numbersFromUser);
 
         // then
-        assertAll(() -> assertThat(result.id().isEmpty()).isEqualTo(true),
+        assertAll(() -> assertThat(result.id()).isNull(),
                 () -> assertThat(result.numbers()).isEqualTo(numbersFromUser),
-                () -> assertThat(result.drawDate().isEmpty()).isEqualTo(true),
+                () -> assertThat(result.drawDate()).isNull(),
                 () -> assertThat(result.message()).isEqualTo("invalid"));
     }
 
@@ -67,9 +67,9 @@ public class NumberReceiverFacadeTest {
         LotteryTicketDto result = numberReceiverFacade.inputNumbers(numbersFromUser);
 
         //then
-        assertAll(() -> assertThat(result.id().isPresent()).isEqualTo(true),
+        assertAll(() -> assertThat(result.id()).isNotNull(),
                 () -> assertThat(result.numbers()).isEqualTo(numbersFromUser),
-                () -> assertThat(result.drawDate().get()).isEqualTo(drawDate),
+                () -> assertThat(result.drawDate()).isEqualTo(drawDate),
                 () -> assertThat(result.message()).isEqualTo("valid"));
     }
 
@@ -84,9 +84,9 @@ public class NumberReceiverFacadeTest {
         LotteryTicketDto result = numberReceiverFacade.inputNumbers(numbersFromUser);
 
         // then
-        assertAll(() -> assertThat(result.id().isEmpty()).isEqualTo(true),
+        assertAll(() -> assertThat(result.id()).isNull(),
                 () -> assertThat(result.numbers()).isEqualTo(numbersFromUser),
-                () -> assertThat(result.drawDate().isEmpty()).isEqualTo(true),
+                () -> assertThat(result.drawDate()).isNull(),
                 () -> assertThat(result.message()).isEqualTo("invalid"));
     }
 
@@ -110,9 +110,9 @@ public class NumberReceiverFacadeTest {
         LotteryTicketDto result = numberReceiverFacade.inputNumbers(numbersFromUser);
 
         // then
-        assertAll(() -> assertThat(result.id().isEmpty()).isEqualTo(true),
+        assertAll(() -> assertThat(result.id()).isNull(),
                 () -> assertThat(result.numbers()).isEqualTo(numbersFromUser),
-                () -> assertThat(result.drawDate().isEmpty()).isEqualTo(true),
+                () -> assertThat(result.drawDate()).isNull(),
                 () -> assertThat(result.message()).isEqualTo("invalid"));
     }
 
@@ -125,7 +125,7 @@ public class NumberReceiverFacadeTest {
 
         //when
         LotteryTicketDto ticket = numberReceiverFacade.inputNumbers(numbersFromUser);
-        LotteryTicketDto result = numberReceiverFacade.retrieveUserNumbers(ticket.id().get());
+        LotteryTicketDto result = numberReceiverFacade.retrieveUserNumbers(ticket.id());
 
         //Then
         assertThat(result.message()).isEqualTo("valid");
@@ -149,11 +149,11 @@ public class NumberReceiverFacadeTest {
 
         //when
         for (int i = 0; i < repetitions; i++) {
-            UUID id = numberReceiverFacade.inputNumbers(List.of(1, 2, 3, 4, 5, 6)).id().get();
+            UUID id = numberReceiverFacade.inputNumbers(List.of(1, 2, 3, 4, 5, 6)).id();
             allUsersId.add(id);
-            id = numberReceiverFacade.inputNumbers(List.of(1, 3, 5, 7, 9, 11)).id().get();
+            id = numberReceiverFacade.inputNumbers(List.of(1, 3, 5, 7, 9, 11)).id();
             allUsersId.add(id);
-            id = numberReceiverFacade.inputNumbers(List.of(22, 33, 1, 2, 3, 4)).id().get();
+            id = numberReceiverFacade.inputNumbers(List.of(22, 33, 1, 2, 3, 4)).id();
             allUsersId.add(id);
         }
 

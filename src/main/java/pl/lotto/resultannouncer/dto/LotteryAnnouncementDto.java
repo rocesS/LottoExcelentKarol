@@ -4,6 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
 
-public record LotteryAnnouncementDto(Optional<List<Integer>> yourNumbers, Optional<List<Integer>> winningNumbers,
-                                     OptionalInt hitNumbers, String message) {
+public record LotteryAnnouncementDto(List<Integer> yourNumbers, List<Integer> winningNumbers,
+                                     int hitNumbers, String message) {
 }

@@ -39,7 +39,7 @@ class NumbersGeneratorFacadeTest {
 
         //when
         WinningNumbersDto result = numbersGeneratorFacade.retrieveWonNumbers(drawDate);
-        List<Integer> numbers = result.winningNumbers().get();
+        List<Integer> numbers = result.winningNumbers();
         int correctDigits = (int) numbers.stream()
                 .filter(a -> a > 0 && a < 100)
                 .distinct().count();
@@ -59,6 +59,6 @@ class NumbersGeneratorFacadeTest {
         WinningNumbersDto result = numbersGeneratorFacade.retrieveWonNumbers(drawDate);
 
         //then
-        assertThat(result.winningNumbers().isEmpty()).isEqualTo(true);
+        assertThat(result.winningNumbers()).isNull();
     }
 }

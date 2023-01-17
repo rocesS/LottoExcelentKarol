@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import pl.lotto.numberreceiver.NumberReceiverFacade;
+import pl.lotto.numberreceiver.TicketMessage;
 import pl.lotto.numberreceiver.dto.LotteryTicketDto;
-import pl.lotto.numberreceiver.dto.RequestDto;
+import pl.lotto.numberreceiver.dto.ReceiverRequestDto;
 
 @RestController
 public class NumberReceiverRestController {
@@ -22,10 +23,10 @@ public class NumberReceiverRestController {
     }
 
     @PostMapping("/numbers")
-    public ResponseEntity<LotteryTicketDto> inputNumbers(@Valid @RequestBody RequestDto request) {
+    public ResponseEntity<LotteryTicketDto> inputNumbers(@Valid @RequestBody ReceiverRequestDto request) {
         List<Integer> numbers = request.numbers();
         LotteryTicketDto ticket = numberReceiverFacade.inputNumbers(numbers);
-        if (ticket.message().equals("valid")) {
+        if (ticket.message().equals(TicketMessage.VALID.message)) {
             return ResponseEntity
                     .status(HttpStatus.ACCEPTED)
                     .body(ticket);

@@ -12,11 +12,10 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -41,9 +40,9 @@ class ResultCheckerFacadeTest {
     @Test
     void should_return_correct_lottery_results_with_winning_message_when_user_won() {
         //given
-        LotteryTicketDto lotteryTicketDto = new LotteryTicketDto(Optional.of(UUID.randomUUID()), (List.of(1, 2, 3, 4, 5, 6)),
-                Optional.of(randomDate), "valid");
-        WinningNumbersDto winningNumbersDto = new WinningNumbersDto(Optional.of(List.of(1, 2, 3, 4, 5, 6)), randomDate);
+        LotteryTicketDto lotteryTicketDto = new LotteryTicketDto(UUID.randomUUID(), (List.of(1, 2, 3, 4, 5, 6)),
+                randomDate, "valid");
+        WinningNumbersDto winningNumbersDto = new WinningNumbersDto(List.of(1, 2, 3, 4, 5, 6), randomDate);
 
         given(numberReceiverFacade.retrieveUserNumbers(any(UUID.class))).willReturn(lotteryTicketDto);
         given(numbersGeneratorFacade.retrieveWonNumbers(randomDate)).willReturn(winningNumbersDto);
@@ -52,18 +51,18 @@ class ResultCheckerFacadeTest {
         LotteryResultDto result = resultCheckerFacade.checkWinner(UUID.randomUUID());
 
         //then
-        assertAll(() -> assertThat(result.yourNumbers().get()).isEqualTo(List.of(1, 2, 3, 4, 5, 6)),
-                () -> assertThat(result.winningNumbers().get()).isEqualTo(List.of(1, 2, 3, 4, 5, 6)),
-                () -> assertThat(result.hitNumbers().getAsInt()).isEqualTo(6),
-                () -> assertThat(result.message()).isEqualTo("you won!"));
+        assertAll(() -> assertThat(result.yourNumbers()).isEqualTo(List.of(1, 2, 3, 4, 5, 6)),
+                () -> assertThat(result.winningNumbers()).isEqualTo(List.of(1, 2, 3, 4, 5, 6)),
+                () -> assertThat(result.hitNumbers()).isEqualTo(6),
+                () -> assertThat(result.message()).isEqualTo(LotteryMessage.WIN.message));
     }
 
     @Test
     void should_return_correct_lottery_results_with_losing_message_when_user_lost() {
         //given
-        LotteryTicketDto lotteryTicketDto = new LotteryTicketDto(Optional.of(UUID.randomUUID()), (List.of(1, 2, 8, 9, 10, 11)),
-                Optional.of(randomDate), "valid");
-        WinningNumbersDto winningNumbersDto = new WinningNumbersDto(Optional.of(List.of(1, 2, 3, 4, 5, 6)), randomDate);
+        LotteryTicketDto lotteryTicketDto = new LotteryTicketDto(UUID.randomUUID(), (List.of(1, 2, 8, 9, 10, 11)),
+                randomDate, "valid");
+        WinningNumbersDto winningNumbersDto = new WinningNumbersDto(List.of(1, 2, 3, 4, 5, 6), randomDate);
 
         given(numberReceiverFacade.retrieveUserNumbers(any(UUID.class))).willReturn(lotteryTicketDto);
         given(numbersGeneratorFacade.retrieveWonNumbers(randomDate)).willReturn(winningNumbersDto);
@@ -72,16 +71,16 @@ class ResultCheckerFacadeTest {
         LotteryResultDto result = resultCheckerFacade.checkWinner(UUID.randomUUID());
 
         //then
-        assertAll(() -> assertThat(result.yourNumbers().get()).isEqualTo(List.of(1, 2, 8, 9, 10, 11)),
-                () -> assertThat(result.winningNumbers().get()).isEqualTo(List.of(1, 2, 3, 4, 5, 6)),
-                () -> assertThat(result.hitNumbers().getAsInt()).isEqualTo(2),
-                () -> assertThat(result.message()).isEqualTo("you lost!"));
+        assertAll(() -> assertThat(result.yourNumbers()).isEqualTo(List.of(1, 2, 8, 9, 10, 11)),
+                () -> assertThat(result.winningNumbers()).isEqualTo(List.of(1, 2, 3, 4, 5, 6)),
+                () -> assertThat(result.hitNumbers()).isEqualTo(2),
+                () -> assertThat(result.message()).isEqualTo(LotteryMessage.LOSE.message));
     }
 
     @Test
     void should_return_result_with_empty_credentials_and_invalid_message_when_user_gave_invalid_id() {
         //given
-        WinningNumbersDto winningNumbersDto = new WinningNumbersDto(Optional.of(List.of(1, 2, 3, 4, 5, 6)), randomDate);
+        WinningNumbersDto winningNumbersDto = new WinningNumbersDto(List.of(1, 2, 3, 4, 5, 6), randomDate);
 
         given(numberReceiverFacade.retrieveUserNumbers(any(UUID.class))).willReturn(null);
         given(numbersGeneratorFacade.retrieveWonNumbers(randomDate)).willReturn(winningNumbersDto);
@@ -90,9 +89,9 @@ class ResultCheckerFacadeTest {
         LotteryResultDto result = resultCheckerFacade.checkWinner(UUID.randomUUID());
 
         //then
-        assertAll(() -> assertThat(result.yourNumbers().isPresent()).isEqualTo(false),
-                () -> assertThat(result.winningNumbers().isPresent()).isEqualTo(false),
-                () -> assertThat(result.hitNumbers().isPresent()).isEqualTo(false),
-                () -> assertThat(result.message()).isEqualTo("invalid id"));
+        assertAll(() -> assertThat(result.yourNumbers()).isNull(),
+                () -> assertThat(result.winningNumbers()).isNull(),
+                () -> assertThat(result.hitNumbers()).isEqualTo(0),
+                () -> assertThat(result.message()).isEqualTo(LotteryMessage.INVALID_ID.message));
     }
 }
