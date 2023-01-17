@@ -8,8 +8,6 @@ import pl.lotto.resultchecker.ResultCheckerFacade;
 import pl.lotto.resultchecker.dto.LotteryResultDto;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

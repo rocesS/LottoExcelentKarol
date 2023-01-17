@@ -16,14 +16,13 @@ class WinningNumbersGenerator {
         this.clock = clock;
     }
 
-    public boolean generateWinningNumbers() {
+    public void generateWinningNumbers() {
         List<Integer> numbers = numbersGenerator.generateNumbers();
 
         LocalDateTime drawDate = LocalDateTime.now(clock)
                 .withHour(DrawTime.HOURS.getValue()).withMinute(DrawTime.MINUTES.getValue()).withSecond(DrawTime.SECONDS.getValue());
 
         winningNumbersRepository.insert(new WinningNumbers(numbers, drawDate));
-        return true;
     }
 
 }

@@ -1,7 +1,6 @@
 package pl.lotto.numbergenerator;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 class WinningNumbersRetriever {
     WinningNumbersRepository winningNumbersRepository;
