@@ -3,8 +3,6 @@ package pl.lotto.numbergenerator;
 import org.springframework.scheduling.annotation.Scheduled;
 import pl.lotto.numbergenerator.dto.WinningNumbersDto;
 
-import java.time.LocalDateTime;
-
 
 public class NumbersGeneratorFacade {
     private final WinningNumbersRetriever winningNumbersRetriever;
@@ -15,13 +13,13 @@ public class NumbersGeneratorFacade {
         this.winningNumbersGenerator = winningNumbersGenerator;
     }
 
-    public WinningNumbersDto retrieveWonNumbers(LocalDateTime drawDate) {
+    public WinningNumbersDto retrieveWonNumbers(String drawDate) {
         WinningNumbers winningNumbers = winningNumbersRetriever.retrieveWonNumbers(drawDate);
         return DtoMapper.mapWinningNumbersToDto(winningNumbers);
     }
 
     @Scheduled(cron = "${spring.lotto.cron}")
-    public void drawWinningNumbers() {
+    public void scheduledDraw() {
         winningNumbersGenerator.generateWinningNumbers();
     }
 }

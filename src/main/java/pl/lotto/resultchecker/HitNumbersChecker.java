@@ -5,7 +5,6 @@ import pl.lotto.numbergenerator.dto.WinningNumbersDto;
 import pl.lotto.numberreceiver.NumberReceiverFacade;
 import pl.lotto.numberreceiver.dto.LotteryTicketDto;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,7 +24,7 @@ class HitNumbersChecker {
             return new LotteryResult(null, null, 0, LotteryMessage.INVALID_ID.message);
         }
 
-        LocalDateTime drawDate = lotteryTicketDto.drawDate();
+        String drawDate = lotteryTicketDto.drawDate();
         WinningNumbersDto winningNumbersDto = numbersGeneratorFacade.retrieveWonNumbers(drawDate);
 
         if (winningNumbersDto.winningNumbers() != null) {

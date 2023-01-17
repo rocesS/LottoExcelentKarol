@@ -20,8 +20,7 @@ class NumbersGeneratorFacadeConfiguration {
 
     @Bean
     NumbersGeneratorFacade numbersGeneratorFacade(WinningNumbersRepository winningNumbersRepository, Clock clock) {
-        DrawDateChecker drawDateChecker = new DrawDateChecker(clock);
-        WinningNumbersRetriever winningNumbersRetriever = new WinningNumbersRetriever(winningNumbersRepository, numbersGenerator(), drawDateChecker);
+        WinningNumbersRetriever winningNumbersRetriever = new WinningNumbersRetriever(winningNumbersRepository, numbersGenerator());
         WinningNumbersGenerator winningNumbersGenerator = new WinningNumbersGenerator(numbersGenerator(), winningNumbersRepository, clock);
         return new NumbersGeneratorFacade(winningNumbersRetriever, winningNumbersGenerator);
     }

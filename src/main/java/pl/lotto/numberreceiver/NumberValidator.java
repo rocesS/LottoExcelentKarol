@@ -4,7 +4,6 @@ import java.util.Collection;
 
 
 class NumberValidator {
-
     private static final int MIN = 1;
     private static final int MAX = 99;
     private static final int NUM_OF_NUMBERS = 6;

@@ -11,7 +11,7 @@ import java.util.*;
 import java.util.function.Function;
 
 class WinningNumbersRepositoryTest implements WinningNumbersRepository {
-    Map<LocalDateTime, WinningNumbers> winningNumbers = new HashMap<>();
+    Map<String, WinningNumbers> winningNumbers = new HashMap<>();
 
     @Override
     public <S extends WinningNumbers> S insert(S entity) {
@@ -20,7 +20,7 @@ class WinningNumbersRepositoryTest implements WinningNumbersRepository {
     }
 
     @Override
-    public WinningNumbers findByDrawDate(LocalDateTime drawDate) {
+    public WinningNumbers findByDrawDate(String drawDate) {
         return winningNumbers.get(drawDate);
     }
 

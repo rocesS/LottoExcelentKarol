@@ -1,11 +1,11 @@
 package pl.lotto.numbergenerator;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.UUID;
+
 @Repository
 public interface WinningNumbersRepository extends MongoRepository<WinningNumbers, UUID> {
-    WinningNumbers findByDrawDate(LocalDateTime drawDate);
+    WinningNumbers findByDrawDate(String drawDate);
 }

@@ -3,27 +3,31 @@ package pl.lotto.numbergenerator;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
 import java.util.List;
-
+import java.util.UUID;
 
 @Document(collection = "winningNumbers")
 class WinningNumbers {
     @Id
-    private String id;
+    private UUID id;
     private final List<Integer> winningNumbers;
-    private final LocalDateTime drawDate;
+    private final String drawDate;
 
-    WinningNumbers(List<Integer> winningNumbers, LocalDateTime drawDate) {
+    public WinningNumbers(UUID id, List<Integer> winningNumbers, String drawDate) {
+        this.id = id;
         this.winningNumbers = winningNumbers;
         this.drawDate = drawDate;
+    }
+
+    UUID getId() {
+        return id;
     }
 
     List<Integer> getWinningNumbers() {
         return winningNumbers;
     }
 
-    LocalDateTime getDrawDate() {
+    String getDrawDate() {
         return drawDate;
     }
 }

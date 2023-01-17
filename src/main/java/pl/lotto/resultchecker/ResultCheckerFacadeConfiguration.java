@@ -7,7 +7,6 @@ import pl.lotto.numberreceiver.NumberReceiverFacade;
 
 @Configuration
 class ResultCheckerFacadeConfiguration {
-
     @Bean
     ResultCheckerFacade resultCheckerFacade(NumberReceiverFacade numberReceiverFacade, NumbersGeneratorFacade numbersGeneratorFacade) {
         HitNumbersChecker hitNumbersChecker = new HitNumbersChecker(numberReceiverFacade, numbersGeneratorFacade);

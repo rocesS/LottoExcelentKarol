@@ -1,27 +1,21 @@
 package pl.lotto.numbergenerator;
 
-import java.time.LocalDateTime;
-
 class WinningNumbersRetriever {
     WinningNumbersRepository winningNumbersRepository;
     NumbersGenerator numbersGenerator;
-    DrawDateChecker drawDateChecker;
 
-    public WinningNumbersRetriever(WinningNumbersRepository winningNumbersRepo, NumbersGenerator numbersGenerator, DrawDateChecker drawDateChecker) {
+
+    public WinningNumbersRetriever(WinningNumbersRepository winningNumbersRepo, NumbersGenerator numbersGenerator) {
         this.winningNumbersRepository = winningNumbersRepo;
         this.numbersGenerator = numbersGenerator;
-        this.drawDateChecker = drawDateChecker;
     }
 
-    public WinningNumbers retrieveWonNumbers(LocalDateTime drawDate) {
+    public WinningNumbers retrieveWonNumbers(String drawDate) {
         WinningNumbers winningNumbers = winningNumbersRepository.findByDrawDate(drawDate);
-        boolean areWinningNumbersAvailable = winningNumbers != null;
 
-        // if the draw has already taken place and winning numbers are in repo
-        if (drawDateChecker.isAfterDraw(drawDate) && areWinningNumbersAvailable) {
+        if(winningNumbers != null) {
             return winningNumbers;
         }
-
-        return new WinningNumbers(null, drawDate);
+        return new WinningNumbers(null, null, drawDate);
     }
 }

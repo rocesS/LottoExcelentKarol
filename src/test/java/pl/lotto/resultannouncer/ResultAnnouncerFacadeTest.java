@@ -32,7 +32,7 @@ class ResultAnnouncerFacadeTest {
     void should_return_correct_lottery_results_with_winning_message_when_user_won() {
         //given
         LotteryResultDto lotteryResultDto = new LotteryResultDto(List.of(1, 2, 3, 4, 5, 6),
-                List.of(1, 2, 3, 4, 5, 6), 6, "you won!");
+                List.of(1, 2, 3, 4, 5, 6), 6, LotteryMessage.WIN.message);
         given(resultCheckerFacade.checkWinner(any(UUID.class)))
                 .willReturn(lotteryResultDto);
 
@@ -43,13 +43,13 @@ class ResultAnnouncerFacadeTest {
         assertAll(() -> assertThat(result.yourNumbers()).isEqualTo(List.of(1, 2, 3, 4, 5, 6)),
                 () -> assertThat(result.winningNumbers()).isEqualTo(List.of(1, 2, 3, 4, 5, 6)),
                 () -> assertThat(result.hitNumbers()).isEqualTo(6),
-                () -> assertThat(result.message()).isEqualTo("you won!"));
+                () -> assertThat(result.message()).isEqualTo(LotteryMessage.WIN.message));
     }
 
     @Test
     void should_return_correct_lottery_results_with_losing_message_when_user_lost() {
         //given
-        LotteryResultDto lotteryResultDto = new LotteryResultDto(List.of(1, 2, 8, 9, 10, 11), List.of(1, 2, 3, 4, 5, 6), 2, "you lost!");
+        LotteryResultDto lotteryResultDto = new LotteryResultDto(List.of(1, 2, 8, 9, 10, 11), List.of(1, 2, 3, 4, 5, 6), 2, LotteryMessage.LOSE.message);
         given(resultCheckerFacade.checkWinner(any(UUID.class))).willReturn(lotteryResultDto);
 
         //when
@@ -59,7 +59,7 @@ class ResultAnnouncerFacadeTest {
         assertAll(() -> assertThat(result.yourNumbers()).isEqualTo(List.of(1, 2, 8, 9, 10, 11)),
                 () -> assertThat(result.winningNumbers()).isEqualTo(List.of(1, 2, 3, 4, 5, 6)),
                 () -> assertThat(result.hitNumbers()).isEqualTo(2),
-                () -> assertThat(result.message()).isEqualTo("you lost!"));
+                () -> assertThat(result.message()).isEqualTo(LotteryMessage.LOSE.message));
     }
 
     @Test
@@ -75,7 +75,7 @@ class ResultAnnouncerFacadeTest {
         assertAll(() -> assertThat(result.yourNumbers()).isNull(),
                 () -> assertThat(result.winningNumbers()).isNull(),
                 () -> assertThat(result.hitNumbers()).isEqualTo(0),
-                () -> assertThat(result.message()).isEqualTo("invalid"));
+                () -> assertThat(result.message()).isEqualTo(LotteryMessage.INVALID.message));
     }
 }
 

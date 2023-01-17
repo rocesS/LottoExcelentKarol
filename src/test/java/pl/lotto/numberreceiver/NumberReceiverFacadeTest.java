@@ -69,7 +69,7 @@ public class NumberReceiverFacadeTest {
         //then
         assertAll(() -> assertThat(result.id()).isNotNull(),
                 () -> assertThat(result.numbers()).isEqualTo(numbersFromUser),
-                () -> assertThat(result.drawDate()).isEqualTo(drawDate),
+                () -> assertThat(result.drawDate()).isEqualTo(drawDate.toString()),
                 () -> assertThat(result.message()).isEqualTo("valid"));
     }
 

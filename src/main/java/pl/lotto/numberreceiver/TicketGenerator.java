@@ -7,9 +7,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 class TicketGenerator {
-
     Clock clock;
-
     IdGenerator idGenerator;
     DrawDateGenerator drawDateGenerator;
 
@@ -23,7 +21,7 @@ class TicketGenerator {
     LotteryTicket generateTicket(Collection<Integer> numbers) {
         UUID id = idGenerator.generateId();
         LocalDateTime drawDate = drawDateGenerator.generateDrawDate(LocalDateTime.now(clock));
-        return new LotteryTicket(id, new ArrayList<>(numbers), drawDate, TicketMessage.VALID.message);
+        return new LotteryTicket(id, new ArrayList<>(numbers), drawDate.toString(), TicketMessage.VALID.message);
     }
 
     LotteryTicket generateInvalidTicket(Collection<Integer> numbers) {

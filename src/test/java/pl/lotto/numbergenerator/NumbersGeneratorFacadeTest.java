@@ -6,6 +6,7 @@ import pl.lotto.numbergenerator.dto.WinningNumbersDto;
 
 import java.time.*;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static java.time.DayOfWeek.SATURDAY;
@@ -26,19 +27,17 @@ class NumbersGeneratorFacadeTest {
 
         winningNumbersRepositoryTest = new WinningNumbersRepositoryTest();
         List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6);
-        winningNumbersRepositoryTest.insert(new WinningNumbers(numbers, drawDate));
+        winningNumbersRepositoryTest.insert(new WinningNumbers(UUID.randomUUID(), numbers, drawDate.toString()));
     }
 
     @Test
-    void should_return_correct_numbers_when_query_date_is_after_draw_date_and_winning_numbers_are_generated() {
+    void should_return_correct_numbers_when_winning_numbers_are_generated() {
         //given
-        Clock shiftedClock = Clock.offset(clock, Duration.ofHours(1));
-
         NumbersGeneratorFacade numbersGeneratorFacade = new NumbersGeneratorFacadeConfiguration()
-                .createFacadeForTest(winningNumbersRepositoryTest, shiftedClock);
+                .createFacadeForTest(winningNumbersRepositoryTest, clock);
 
         //when
-        WinningNumbersDto result = numbersGeneratorFacade.retrieveWonNumbers(drawDate);
+        WinningNumbersDto result = numbersGeneratorFacade.retrieveWonNumbers(drawDate.toString());
         List<Integer> numbers = result.winningNumbers();
         int correctDigits = (int) numbers.stream()
                 .filter(a -> a > 0 && a < 100)
@@ -49,14 +48,14 @@ class NumbersGeneratorFacadeTest {
     }
 
     @Test
-    void should_return_null_when_query_date_is_before_draw_date() {
+    void should_return_null_when_draw_not_completed() {
         //given
-        Clock shiftedClock = Clock.offset(clock, Duration.ofHours(-1));
+        LocalDateTime date = drawDate.plusDays(7);
         NumbersGeneratorFacade numbersGeneratorFacade = new NumbersGeneratorFacadeConfiguration()
-                .createFacadeForTest(winningNumbersRepositoryTest, shiftedClock);
+                .createFacadeForTest(winningNumbersRepositoryTest, clock);
 
         //when
-        WinningNumbersDto result = numbersGeneratorFacade.retrieveWonNumbers(drawDate);
+        WinningNumbersDto result = numbersGeneratorFacade.retrieveWonNumbers(date.toString());
 
         //then
         assertThat(result.winningNumbers()).isNull();
