@@ -7,8 +7,6 @@ import pl.lotto.numberreceiver.dto.LotteryTicketDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.UUID;
 
 class HitNumbersChecker {
@@ -24,24 +22,24 @@ class HitNumbersChecker {
     LotteryResult checkIfUserWon(UUID id) {
         LotteryTicketDto lotteryTicketDto = numberReceiverFacade.retrieveUserNumbers(id);
         if (lotteryTicketDto == null) {
-            return new LotteryResult(Optional.empty(), Optional.empty(), OptionalInt.empty(), "invalid id");
+            return new LotteryResult(null, null, 0, LotteryMessage.INVALID_ID.message);
         }
 
-        Optional<LocalDateTime> drawDate = lotteryTicketDto.drawDate();
-        WinningNumbersDto winningNumbersDto = numbersGeneratorFacade.retrieveWonNumbers(drawDate.get());
+        LocalDateTime drawDate = lotteryTicketDto.drawDate();
+        WinningNumbersDto winningNumbersDto = numbersGeneratorFacade.retrieveWonNumbers(drawDate);
 
-        if (winningNumbersDto.winningNumbers().isPresent()) {
+        if (winningNumbersDto.winningNumbers() != null) {
             List<Integer> userNumbers = lotteryTicketDto.numbers();
-            List<Integer> winningNumbers = winningNumbersDto.winningNumbers().get();
+            List<Integer> winningNumbers = winningNumbersDto.winningNumbers();
             int hitNumbers = checkHowManyNumbersWasHit(userNumbers, winningNumbers);
             if (hitNumbers >= minWonNumbers) {
-                return new LotteryResult(Optional.of(userNumbers), Optional.of(winningNumbers), OptionalInt.of(hitNumbers), "you won!");
+                return new LotteryResult(userNumbers, winningNumbers, hitNumbers, LotteryMessage.WIN.message);
             } else {
-                return new LotteryResult(Optional.of(userNumbers), Optional.of(winningNumbers), OptionalInt.of(hitNumbers), "you lost!");
+                return new LotteryResult(userNumbers, winningNumbers, hitNumbers, LotteryMessage.LOSE.message);
             }
         }
 
-        return new LotteryResult(Optional.empty(), Optional.empty(), OptionalInt.empty(), "the draw has not yet taken place");
+        return new LotteryResult(null, null, 0, LotteryMessage.NO_DRAW.message);
     }
 
     private int checkHowManyNumbersWasHit(List<Integer> userNumbers, List<Integer> winningNumbers) {
