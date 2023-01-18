@@ -26,15 +26,9 @@ public class NumberReceiverRestController {
     public ResponseEntity<LotteryTicketDto> inputNumbers(@Valid @RequestBody ReceiverRequestDto request) {
         List<Integer> numbers = request.numbers();
         LotteryTicketDto ticket = numberReceiverFacade.inputNumbers(numbers);
-        if (ticket.message().equals(TicketMessage.VALID.message)) {
-            return ResponseEntity
-                    .status(HttpStatus.ACCEPTED)
-                    .body(ticket);
-        } else {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(ticket);
-        }
+        return ResponseEntity
+                .status(HttpStatus.ACCEPTED)
+                .body(ticket);
     }
 }
 

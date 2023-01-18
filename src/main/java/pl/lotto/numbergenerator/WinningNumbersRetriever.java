@@ -16,6 +16,7 @@ class WinningNumbersRetriever {
         if(winningNumbers != null) {
             return winningNumbers;
         }
+
         return new WinningNumbers(null, null, drawDate);
     }
 }

@@ -63,9 +63,9 @@ class ResultAnnouncerFacadeTest {
     }
 
     @Test
-    void should_return_result_with_empty_credentials_and_invalid_message_when_user_gave_invalid_id() {
+    void should_return_result_with_empty_credentials_and_invalid_message_when_user_gave_id_that_is_not_in_repo() {
         //given
-        LotteryResultDto lotteryResultDto = new LotteryResultDto(null, null, 0, "invalid");
+        LotteryResultDto lotteryResultDto = new LotteryResultDto(null, null, 0, LotteryMessage.INVALID_ID.message);
         given(resultCheckerFacade.checkWinner(any(UUID.class))).willReturn(lotteryResultDto);
 
         //when
@@ -75,7 +75,7 @@ class ResultAnnouncerFacadeTest {
         assertAll(() -> assertThat(result.yourNumbers()).isNull(),
                 () -> assertThat(result.winningNumbers()).isNull(),
                 () -> assertThat(result.hitNumbers()).isEqualTo(0),
-                () -> assertThat(result.message()).isEqualTo(LotteryMessage.INVALID.message));
+                () -> assertThat(result.message()).isEqualTo(LotteryMessage.INVALID_ID.message));
     }
 }
 

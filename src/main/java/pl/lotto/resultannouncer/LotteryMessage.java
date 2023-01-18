@@ -1,7 +1,7 @@
 package pl.lotto.resultannouncer;
 
 public enum LotteryMessage {
-    INVALID("invalid"), WIN("you won!"), LOSE("you lost!");
+    INVALID_ID("invalid id"), WIN("you won!"), LOSE("you lost!"), NO_DRAW("the draw has not yet taken place");
 
     public final String message;
 

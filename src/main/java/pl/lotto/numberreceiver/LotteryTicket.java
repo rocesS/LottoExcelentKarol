@@ -7,6 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Document(collection = "lotteryTickets")
-record LotteryTicket (@Id UUID id, List<Integer> numbers, String drawDate, String message){
+public record LotteryTicket (@Id UUID id, List<Integer> numbers, String drawDate, String message){
 }
 

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Document(collection = "winningNumbers")
-class WinningNumbers {
+public class WinningNumbers {
     @Id
     private UUID id;
     private final List<Integer> winningNumbers;

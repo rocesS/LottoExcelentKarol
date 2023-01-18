@@ -14,6 +14,7 @@ class NumbersGenerator {
         while (generatedNumbers.size() < numOfNumbers) {
             generatedNumbers.add(rand.nextInt(bound) + 1);
         }
+
         return new ArrayList<>(generatedNumbers);
     }
 }
