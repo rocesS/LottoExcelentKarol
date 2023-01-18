@@ -26,9 +26,6 @@ import static java.time.temporal.TemporalAdjusters.next;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(properties = {
-        "spring.lotto.cron=*/2 * * * * *"
-})
 public class WinningUserLottoIntegrationTest extends BaseIntegrationTest {
 
     @Autowired
@@ -60,7 +57,7 @@ public class WinningUserLottoIntegrationTest extends BaseIntegrationTest {
         LocalDateTime drawDate = LocalDateTime.now().with(next(SATURDAY)).withHour(12).withMinute(0).withSecond(0).withNano(0);
 
         Awaitility.await()
-                .atMost(15, TimeUnit.SECONDS)
+                .atMost(5, TimeUnit.SECONDS)
                 .pollInterval(Durations.ONE_SECOND)
                 .until(() -> numbersGeneratorFacade.retrieveWonNumbers(drawDate.toString()).winningNumbers() != null);
 
