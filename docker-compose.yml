@@ -5,7 +5,7 @@ services:
   # MONGODB COMPONENTS
   mongo:
     image: mongo
-    container_name: mongo_db
+    container_name: mongodb
     restart: always
     ports:
       - '27017:27017'
@@ -31,13 +31,27 @@ services:
 
   lotto-app:
     build: lotto-engine
+    container_name: lotto-app
+    depends_on:
+      - mongo
+      - eureka-server
     ports:
       - "9090:9090"
 
   num-generator:
     build: number-generator
+    container_name: num-generator
+    depends_on:
+      - mongo
+      - eureka-server
     ports:
       - "8000:8000"
+
+  eureka-server:
+    build: eureka-server
+    container_name: eureka
+    ports:
+      - "8761:8761"
 
 
 
