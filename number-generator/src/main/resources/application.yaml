@@ -1,8 +1,18 @@
 server:
   port: 8000
 spring:
+  application:
+    name: number-generator
   data:
     mongodb:
       uri: mongodb://admin:admin@mongo:27017/lotto
   lotto:
     cron: "0 0 12 ? * SAT"
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    preferIpAddress: true
