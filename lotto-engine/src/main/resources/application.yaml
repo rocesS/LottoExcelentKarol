@@ -1,12 +1,15 @@
 server:
   port: 9090
 spring:
+  application:
+    name: lotto-engine
   data:
     mongodb:
       uri: mongodb://admin:admin@mongo:27017/lotto
 name:
   service:
     url: http://num-generator:8000
+
 
 
 
