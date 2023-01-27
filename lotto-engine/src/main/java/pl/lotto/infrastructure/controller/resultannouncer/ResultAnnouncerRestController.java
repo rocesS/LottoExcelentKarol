@@ -16,9 +16,9 @@ public class ResultAnnouncerRestController {
         this.resultAnnouncerFacade = resultAnnouncerFacade;
     }
 
-    @GetMapping("/announcement")
-    ResponseEntity<LotteryAnnouncementDto> checkWinner(@RequestParam @Valid AnnouncerRequestDto request) {
-        String id = request.id();
+    @PostMapping("/announcement")
+    ResponseEntity<LotteryAnnouncementDto> checkWinner(@Valid @RequestBody AnnouncerRequestDto request) {
+        String id = request.getId();
         LotteryAnnouncementDto announcement = resultAnnouncerFacade.checkWinner(id);
 
         return ResponseEntity
