@@ -37,15 +37,17 @@ public class AnnouncerControllerIntegrationTest {
     ResultAnnouncerFacade resultAnnouncerFacade;
 
 
+
+
     @Test
     void should_return_400_status_code_when_invalid_uuid_provided() throws Exception {
         //given
-        String invalidUUID = "2692951-237c-11ed-861d-0242acz20002";
+        String invalidUUID = "792g51-237c-11ed-861d-024acz20002";
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/announcement")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(invalidUUID));
+                .content(invalidUUID);
 
         //when
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
@@ -60,12 +62,13 @@ public class AnnouncerControllerIntegrationTest {
     @Test
     void should_return_202_status_code_when_valid_ticket_provided_and_no_draw() throws Exception {
         //given
-        String validUUID = UUID.randomUUID().toString();
+        UUID validUUID = UUID.randomUUID();
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/announcement")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(validUUID));
+
 
         LotteryAnnouncementDto lotteryAnnouncementDto = new LotteryAnnouncementDto(null, null, 0, LotteryMessage.NO_DRAW.message);
         given(resultAnnouncerFacade.checkWinner(any(String.class))).willReturn(lotteryAnnouncementDto);
@@ -74,7 +77,7 @@ public class AnnouncerControllerIntegrationTest {
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
 
         //then
-        verify(resultAnnouncerFacade, times(1)).checkWinner(validUUID);
+        verify(resultAnnouncerFacade, times(1)).checkWinner(validUUID.toString());
         assertEquals(HttpStatus.ACCEPTED.value(),
                 mvcResult.getResponse().getStatus(),
                 "Incorrect HTTP Status Code returned");

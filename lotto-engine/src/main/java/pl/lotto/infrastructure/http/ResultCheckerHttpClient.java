@@ -9,6 +9,8 @@ import pl.lotto.resultchecker.RetrieverWonNumbersClient;
 import pl.lotto.resultchecker.dto.WinningNumbersDto;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ResultCheckerHttpClient implements RetrieverWonNumbersClient {
@@ -24,12 +26,13 @@ public class ResultCheckerHttpClient implements RetrieverWonNumbersClient {
 
     @Override
     public WinningNumbersDto retrieveWonNumbers(String drawDate) {
-        String uri = NumberGeneratorServiceUrl + "/winningNumbers?request=" + drawDate;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 
         HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+
+        String uri = NumberGeneratorServiceUrl + "/winningNumbers?request=" + drawDate;
 
         ResponseEntity<WinningNumbersDto> response = restTemplate.exchange(
                 uri,
