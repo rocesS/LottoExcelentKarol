@@ -8,6 +8,8 @@ import pl.lotto.resultannouncer.ResultAnnouncerFacade;
 import pl.lotto.resultannouncer.dto.AnnouncerRequestDto;
 import pl.lotto.resultannouncer.dto.LotteryAnnouncementDto;
 
+import java.util.List;
+
 @RestController
 public class ResultAnnouncerRestController {
     private final ResultAnnouncerFacade resultAnnouncerFacade;
@@ -16,9 +18,16 @@ public class ResultAnnouncerRestController {
         this.resultAnnouncerFacade = resultAnnouncerFacade;
     }
 
-    @PostMapping("/announcement")
-    ResponseEntity<LotteryAnnouncementDto> checkWinner(@Valid @RequestBody AnnouncerRequestDto request) {
-        String id = request.getId();
+    @GetMapping("/announcement/{id}")
+    ResponseEntity<LotteryAnnouncementDto> checkWinner(@PathVariable String id) {
+        boolean tr = resultAnnouncerFacade.isValidUUID(id);
+        boolean tre = resultAnnouncerFacade.isValidUUID(id);
+        if (!tr) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new LotteryAnnouncementDto(null, null, 0, "invalid id"));
+        }
+
         LotteryAnnouncementDto announcement = resultAnnouncerFacade.checkWinner(id);
 
         return ResponseEntity
