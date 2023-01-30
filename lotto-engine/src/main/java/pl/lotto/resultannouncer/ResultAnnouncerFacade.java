@@ -16,4 +16,8 @@ public class ResultAnnouncerFacade {
         return new LotteryAnnouncementDto(lotteryResultDto.yourNumbers(), lotteryResultDto.winningNumbers(),
                 lotteryResultDto.hitNumbers(), lotteryResultDto.message());
     }
+
+    public boolean isValidUUID(String uuid) {
+        return UuidValidator.isValidUUID(uuid);
+    }
 }
