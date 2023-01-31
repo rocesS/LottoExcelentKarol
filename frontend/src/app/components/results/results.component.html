@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div class="outer">
+  <div class="center">
+
+    <h1 class="header">Input your ticket ID!</h1>
+
+    <div class="form-custom">
+      <input type="text" #inputId (input)="onInput(inputId.value)">
+      <input type="submit" value="Check" (click)="onClickCheck()">
+    </div>
+
+    <p *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</p>
+
+    <div *ngIf="resultsAvailable" id="results">
+      <h2>Your results:</h2><br>
+
+      <div>
+        <span>
+        <p>Hit Numbers: <span id="numbers">{{ hitNumbers }}</span></p>
+        </span>
+      </div>
+
+      <div>
+        <span>Your Numbers:
+        <p id="your-numbers">[{{ yourNumbers.join(', ') }}]</p>
+      </span>
+      </div>
+
+      <div>
+        <span>Winning Numbers:
+        <p id="winning-numbers">[{{ winningNumbers.join(', ') }}]</p>
+      </span>
+      </div>
+
+      <div>
+        <span>
+        <p>ID: <span id="id">{{ ticketId }}</span></p>
+        </span>
+      </div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

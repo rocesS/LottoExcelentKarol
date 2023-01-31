@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div class="outer">
+  <div class="center">
+
+    <h1 class="header">Enter your numbers! [1-99] </h1>
+
+    <div class="form-custom">
+      <input type="text" #number1 (input)="onInput(number1.value, 0)" value="{{inputNumbers[0]}}">
+      <input type="text" #number2 (input)="onInput(number2.value, 1)" value="{{inputNumbers[1]}}">
+      <input type="text" #number3 (input)="onInput(number3.value, 2)" value="{{inputNumbers[2]}}">
+      <input type="text" #number4 (input)="onInput(number4.value, 3)" value="{{inputNumbers[3]}}">
+      <input type="text" #number5 (input)="onInput(number5.value, 4)" value="{{inputNumbers[4]}}">
+      <input type="text" #number6 (input)="onInput(number6.value, 5)" value="{{inputNumbers[5]}}">
+      <input type="submit" value="Submit" (click)="onClickSubmit()">
+    </div>
+
+    <input class="clear" type="submit" value="Clear" (click)="onClickClear()">
+
+    <p *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</p>
+  </div>
+
+  <div *ngIf="ticketAvailable" id="ticket">
+    <h2>Your ticket:</h2><br>
+
+    <div>
+      <p id="pID">ID: <span id="id">{{ id }}</span></p>
+    </div>
+
+    <div>
+      <span>Your Numbers:
+        <p id="user-numbers">[{{ numbers.join(', ') }}]</p>
+      </span>
+    </div>
+
+    <div>
+      <p id="date">Draw Date: <span id="draw-date">{{ drawDate }}</span></p>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
