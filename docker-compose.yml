@@ -1,0 +1,65 @@
+version: '3.1'
+
+services:
+
+  # MONGODB COMPONENTS
+  mongo:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: lotto
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo_express
+    restart: always  #restart the container regardless of the exit status
+    ports:
+      - '8081:8081'  # port mapping: [external : inside docker environment]
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/  # mongodb://{mongo-image-username}:{mongo-image-password}@{mongo-image-name}:{port}
+
+
+  lotto-engine:
+    build: backend/lotto-engine
+    container_name: lotto-engine
+    depends_on:
+      - mongo
+      - eureka-server
+    ports:
+      - "9090:9090"
+
+  number-generator:
+    build: backend/number-generator
+    container_name: number-generator
+    depends_on:
+      - mongo
+      - eureka-server
+    ports:
+      - "8000:8000"
+
+  eureka-server:
+    build: backend/eureka-server
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+
+  frontend-lotto:
+    build: frontend
+    container_name: frontend-lotto
+    ports:
+      - "4200:4200"
+
+
+
+
+
