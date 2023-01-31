@@ -66,6 +66,7 @@ export class PlayComponent {
         this.id = response.id;
         this.numbers = response.numbers;
         this.drawDate = response.drawDate;
+        this.drawDate.replace("T", " ");
       });
 
       this.ticketAvailable = true;
