@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 import {AnnouncerService} from "../../services/announcer/announcer.service";
 
@@ -9,14 +9,16 @@ import {AnnouncerService} from "../../services/announcer/announcer.service";
 })
 export class ResultsComponent {
   ticketId: string = '';
-  yourNumbers: number[] = [];
-  winningNumbers: number[] = [];
+  yourNumbers: string | null | undefined;
+  winningNumbers: string | null | undefined;
   hitNumbers: number = 0;
   message: string = ''
   resultsAvailable: boolean = false;
   errorMessage = '';
 
-  constructor(private announcerService: AnnouncerService){}
+  constructor(private announcerService: AnnouncerService) {
+
+  }
 
   onInput(value: string) {
     this.ticketId = value;
@@ -34,31 +36,25 @@ export class ResultsComponent {
     let lotteryResultPromise = this.announcerService.getLotteryResults(this.ticketId);
 
     lotteryResultPromise.then(response => {
-      if (response.message == 'Invalid ID' || response.message == 'The draw has not yet taken place') {
-        this.yourNumbers = [];
-        this.winningNumbers = [];
-        this.hitNumbers = 0;
-        this.message = response.message;
+      this.yourNumbers = response.yourNumbers;
+      this.winningNumbers = response.winningNumbers;
+      this.hitNumbers = response.hitNumbers;
+      this.message = response.message;
+
+      if (this.message == 'Invalid ID') {
+        this.errorMessage = this.message;
+        return;
       }
-      else {
-        this.yourNumbers = response.yourNumbers;
-        this.winningNumbers = response.winningNumbers;
-        this.hitNumbers = response.hitNumbers;
-        this.message = response.message;
+
+      if (this.message == 'The draw has not yet taken place') {
+        this.errorMessage = this.message;
+        return;
       }
+
+      this.resultsAvailable = true;
+
     });
 
 
-    if (this.message == 'Invalid ID') {
-      this.errorMessage = this.message;
-      return;
-    }
-
-    if (this.message == 'The draw has not yet taken place') {
-      this.errorMessage = this.message;
-      return;
-    }
-
-    this.resultsAvailable = true;
   }
 }

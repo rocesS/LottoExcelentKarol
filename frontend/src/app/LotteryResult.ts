@@ -1,6 +1,6 @@
 export interface LotteryResult {
-  yourNumbers: number[];
-  winningNumbers: number[];
+  yourNumbers: string | null | undefined;
+  winningNumbers: string | null | undefined;
   hitNumbers: number;
   message: string;
 }
