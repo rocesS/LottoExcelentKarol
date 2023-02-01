@@ -20,9 +20,7 @@ public class ResultAnnouncerRestController {
 
     @GetMapping("/announcement/{id}")
     ResponseEntity<LotteryAnnouncementDto> checkWinner(@PathVariable String id) {
-        boolean tr = resultAnnouncerFacade.isValidUUID(id);
-        boolean tre = resultAnnouncerFacade.isValidUUID(id);
-        if (!tr) {
+        if (!resultAnnouncerFacade.isValidUUID(id)) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(new LotteryAnnouncementDto(null, null, 0, "invalid id"));

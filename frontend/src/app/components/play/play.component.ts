@@ -65,8 +65,7 @@ export class PlayComponent {
       lotteryTicketPromise.then(response => {
         this.id = response.id;
         this.numbers = response.numbers;
-        this.drawDate = response.drawDate;
-        this.drawDate.replace("T", " ");
+        this.drawDate = response.drawDate.replace("T", " ");
       });
 
       this.ticketAvailable = true;

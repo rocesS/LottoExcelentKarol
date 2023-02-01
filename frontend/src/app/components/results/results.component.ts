@@ -12,7 +12,7 @@ export class ResultsComponent {
   yourNumbers: number[] = [];
   winningNumbers: number[] = [];
   hitNumbers: number = 0;
-  message = ';'
+  message: string = ''
   resultsAvailable: boolean = false;
   errorMessage = '';
 
@@ -23,29 +23,39 @@ export class ResultsComponent {
   }
 
   onClickCheck() {
-    let lotteryResultPromise = this.announcerService.getLotteryResults(this.ticketId);
-
+    this.errorMessage = '';
+    this.resultsAvailable = false;
     const regexExp = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/gi;
     if (!regexExp.test(this.ticketId)) {
       this.errorMessage = 'Invalid ID'
       return;
     }
 
+    let lotteryResultPromise = this.announcerService.getLotteryResults(this.ticketId);
+
     lotteryResultPromise.then(response => {
-      this.yourNumbers = response.yourNumbers;
-      this.winningNumbers = response.winningNumbers;
-      this.hitNumbers = response.hitNumbers;
-      this.message = response.message;
+      if (response.message == 'Invalid ID' || response.message == 'The draw has not yet taken place') {
+        this.yourNumbers = [];
+        this.winningNumbers = [];
+        this.hitNumbers = 0;
+        this.message = response.message;
+      }
+      else {
+        this.yourNumbers = response.yourNumbers;
+        this.winningNumbers = response.winningNumbers;
+        this.hitNumbers = response.hitNumbers;
+        this.message = response.message;
+      }
     });
 
 
-    if (this.message === 'invalid id') {
-      this.errorMessage = 'Invalid ID';
+    if (this.message == 'Invalid ID') {
+      this.errorMessage = this.message;
       return;
     }
 
-    if (this.message === 'the draw has not yet taken place') {
-      this.errorMessage = 'The draw has not yet taken place'
+    if (this.message == 'The draw has not yet taken place') {
+      this.errorMessage = this.message;
       return;
     }
 

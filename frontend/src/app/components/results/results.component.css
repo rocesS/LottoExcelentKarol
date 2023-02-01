@@ -78,7 +78,7 @@ form {
   flex-direction: column;
 }
 
-#id {
+#message {
   font-weight: bold;
   font-style: normal;
 }

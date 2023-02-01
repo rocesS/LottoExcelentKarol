@@ -1,7 +1,7 @@
 package pl.lotto.resultchecker;
 
 public enum LotteryMessage {
-    INVALID_ID("invalid id"), WIN("you won!"), LOSE("you lost!"), NO_DRAW("the draw has not yet taken place");
+    INVALID_ID("Invalid ID"), WIN("You won!"), LOSE("You lost!"), NO_DRAW("The draw has not yet taken place");
 
     public final String message;
 
