@@ -1,14 +1,12 @@
 package pl.lotto.infrastructure.controller.resultannouncer;
 
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 import pl.lotto.resultannouncer.ResultAnnouncerFacade;
-import pl.lotto.resultannouncer.dto.AnnouncerRequestDto;
 import pl.lotto.resultannouncer.dto.LotteryAnnouncementDto;
-
-import java.util.List;
 
 @RestController
 public class ResultAnnouncerRestController {

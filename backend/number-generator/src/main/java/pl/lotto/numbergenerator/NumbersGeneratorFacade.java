@@ -3,8 +3,6 @@ package pl.lotto.numbergenerator;
 import org.springframework.scheduling.annotation.Scheduled;
 import pl.lotto.numbergenerator.dto.WinningNumbersDto;
 
-import java.sql.SQLOutput;
-
 
 public class NumbersGeneratorFacade {
     private final WinningNumbersRetriever winningNumbersRetriever;
