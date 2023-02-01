@@ -5,7 +5,7 @@ import java.time.temporal.TemporalAdjusters;
 
 class DrawDateGenerator {
     LocalDateTime generateDrawDate(LocalDateTime currentDate) {
-        return currentDate.with(TemporalAdjusters.next(DrawTime.DAY.getDayOfWeek()))
+        return currentDate.with(TemporalAdjusters.nextOrSame(DrawTime.DAY.getDayOfWeek()))
                 .withHour(DrawTime.HOURS.getValue()).withMinute(DrawTime.MINUTES.getValue())
                 .withSecond(DrawTime.SECONDS.getValue()).withNano(DrawTime.NANO.getValue());
     }

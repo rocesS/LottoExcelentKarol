@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static java.time.DayOfWeek.SATURDAY;
-import static java.time.temporal.TemporalAdjusters.next;
+import static java.time.temporal.TemporalAdjusters.nextOrSame;
 
 class WinningNumbersGenerator {
 
@@ -21,7 +21,7 @@ class WinningNumbersGenerator {
         List<Integer> numbers = numbersGenerator.generateNumbers();
 
         LocalDateTime drawDate = LocalDateTime.now()
-                .with(next(SATURDAY)).withHour(DrawTime.HOURS.value)
+                .with(nextOrSame(SATURDAY)).withHour(DrawTime.HOURS.value)
                 .withMinute(DrawTime.MINUTES.value).withSecond(DrawTime.SECONDS.value).withNano(DrawTime.NANO.value);
 
         winningNumbersRepository.insert(new WinningNumbers(UUID.randomUUID().toString(), numbers, drawDate.toString()));
