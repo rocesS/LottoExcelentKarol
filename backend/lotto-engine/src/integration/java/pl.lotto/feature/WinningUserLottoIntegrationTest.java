@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import pl.lotto.numberreceiver.dto.LotteryTicketDto;
 import pl.lotto.numberreceiver.dto.ReceiverRequestDto;
-import pl.lotto.resultannouncer.dto.AnnouncerRequestDto;
 import pl.lotto.resultannouncer.dto.LotteryAnnouncementDto;
 import pl.lotto.resultchecker.dto.WinningNumbersDto;
 
@@ -19,7 +18,7 @@ import java.util.UUID;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
 import static java.time.DayOfWeek.SATURDAY;
-import static java.time.temporal.TemporalAdjusters.next;
+import static java.time.temporal.TemporalAdjusters.nextOrSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WinningUserLottoIntegrationTest extends BaseIntegrationTest {
@@ -52,7 +51,7 @@ public class WinningUserLottoIntegrationTest extends BaseIntegrationTest {
 
 
         //given
-        LocalDateTime drawDate = LocalDateTime.now().with(next(SATURDAY)).withHour(12).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime drawDate = LocalDateTime.now().with(nextOrSame(SATURDAY)).withHour(12).withMinute(0).withSecond(0).withNano(0);
         WinningNumbersDto winningNumbersDto = new WinningNumbersDto(UUID.randomUUID().toString(), List.of(1, 2, 3, 4, 5, 6), drawDate.toString());
 
         wireMockServer.stubFor(WireMock.get(urlPathEqualTo("/winningNumbers"))
@@ -66,14 +65,12 @@ public class WinningUserLottoIntegrationTest extends BaseIntegrationTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 
-        AnnouncerRequestDto announcerRequest = new AnnouncerRequestDto(lotteryTicketDto.id());
-        String announcerJson = objectMapper.writeValueAsString(announcerRequest);
-
-        HttpEntity<String> announcerHttpEntity = new HttpEntity<>(announcerJson, headers);
+        HttpEntity<String> announcerHttpEntity = new HttpEntity<>(headers);
 
 
         //when
-        ResponseEntity<LotteryAnnouncementDto> announcerResponseEntity = testRestTemplate.postForEntity("/announcement",
+        ResponseEntity<LotteryAnnouncementDto> announcerResponseEntity = testRestTemplate.exchange("/announcement/" + lotteryTicketDto.id(),
+                HttpMethod.GET,
                 announcerHttpEntity,
                 LotteryAnnouncementDto.class);
 
