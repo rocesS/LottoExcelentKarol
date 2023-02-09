@@ -30,7 +30,7 @@ services:
 
 
   lotto-engine:
-    build: backend/lotto-engine
+    image: karol8650/lotto-engine:latest
     container_name: lotto-engine
     depends_on:
       - mongo
@@ -38,8 +38,9 @@ services:
     ports:
       - "9090:9090"
 
+
   number-generator:
-    build: backend/number-generator
+    image: karol8650/number-generator:latest
     container_name: number-generator
     depends_on:
       - mongo
@@ -48,13 +49,13 @@ services:
       - "8000:8000"
 
   eureka-server:
-    build: backend/eureka-server
+    image: karol8650/eureka-server:latest
     container_name: eureka-server
     ports:
       - "8761:8761"
 
   frontend-lotto:
-    build: frontend
+    image: karol8650/frontend-lotto:latest
     container_name: frontend-lotto
     ports:
       - "4200:4200"
