@@ -1,7 +1,9 @@
 # LottoGame - server
 
+
 ## Client
 https://github.com/karolkraw/LottoGame-client
+
 
 ## Table of Contents
 * [General Info](#general-information)
